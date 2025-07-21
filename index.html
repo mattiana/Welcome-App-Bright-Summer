@@ -1,0 +1,2116 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Book - Chioggia</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" xintegrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Showdown.js for Markdown to HTML conversion -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/2.1.0/showdown.min.js"></script>
+    <!-- Theme Color for Mobile Browsers -->
+    <meta name="theme-color" content="#232323">
+
+    <style>
+        /* Variabili CSS per il tema scuro */
+        :root {
+            --primary: #f3dfd9; /* Colore primario (rosa pallido) */
+            --primary-dark: #e4c8c0; /* Variante più scura del primario */
+            --secondary: #aca5a5; /* Colore secondario (grigio chiaro) */
+            --secondary-dark: #938d8d; /* Variante più scura del secondario */
+            --accent: #232323; /* Colore di sfondo principale (grigio scuro/nero) */
+            --accent-light: #3a3a3a; /* Variante più chiara dello sfondo */
+            --accent-lighter: #4f4f4f; /* Variante ancora più chiara dello sfondo */
+            --success: #10b981; /* Verde per messaggi di successo */
+            --warning: #f59e0b; /* Giallo/Arancio per avvisi */
+            --danger: #ef4444; /* Rosso per errori o pericoli */
+            --dark: #232323; /* Colore scuro (uguale allo sfondo) */
+            --light: #f1f1f1; /* Colore chiaro per testo su sfondo scuro */
+            --light-secondary: #b0b0b0; /* Grigio più scuro per testo secondario */
+            --white: #ffffff; /* Bianco */
+            --nav-height: 65px; /* Altezza della barra di navigazione */
+            --focus-ring-color: rgba(243, 223, 217, 0.4); /* Colore per l'outline del focus */
+            --border-color-light: rgba(255, 255, 255, 0.1); /* Colore dei bordi chiari */
+            --card-shadow: rgba(0, 0, 0, 0.2); /* Ombra delle card */
+        }
+        /* Stili globali */
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--light);
+            background-color: var(--accent);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Stili per i titoli */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+        }
+        h2 { font-size: 1.8rem; font-weight: 700; }
+        h3 { font-size: 1.3rem; font-weight: 600; margin-top: 1.5rem; margin-bottom: 0.75rem; }
+        h4 { font-size: 1.1rem; font-weight: 600; }
+
+        /* Container principale */
+        .container-lg {
+            max-width: 1200px;
+            margin-left: auto; margin-right: auto;
+            padding-left: 1rem; padding-right: 1rem;
+            padding-top: calc(var(--nav-height-actual, var(--nav-height)) + 2rem);
+            padding-bottom: 4rem;
+            position: relative; z-index: 1;
+        }
+        @media (min-width: 768px) {
+            .container-lg { padding-left: 2rem; padding-right: 2rem; }
+        }
+
+        /* Header fisso */
+        .fixed-header {
+            position: sticky; top: 0;
+            z-index: 1000;
+            background-color: rgba(35, 35, 35, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid var(--border-color-light);
+            padding: 0 1rem;
+            height: var(--nav-height);
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .header-left { display: flex; align-items: center; gap: 0.75rem; }
+        #header-custom-logo { height: 48px; width: auto; display: block; } /* Logo ingrandito */
+        #backButton {
+            color: var(--light-secondary); font-size: 1.4rem;
+            background: none; border: none; cursor: pointer;
+            padding: 0.5rem; display: none;
+            flex-shrink: 0; margin-left: -0.5rem;
+        }
+        #backButton:hover { color: var(--white); }
+        .header-right { display: flex; align-items: center; }
+
+        /* Selettore lingua */
+        .lang-selector { display: flex; align-items: center; gap: 0.5rem; }
+        .lang-btn {
+            background-color: transparent;
+            border: 1px solid var(--secondary); color: var(--secondary);
+            padding: 0.2rem 0.5rem; border-radius: 4px;
+            font-size: 0.75rem; font-weight: 600; cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .lang-btn:hover { background-color: var(--accent-light); color: var(--light); border-color: var(--light); }
+        .lang-btn.active { background-color: var(--primary); color: var(--dark); border-color: var(--primary); cursor: default; }
+
+        /* Stile Card personalizzato */
+        .custom-card {
+            background-color: var(--accent-light); color: var(--light);
+            border-radius: 1.25rem;
+            padding: 2rem;
+            box-shadow: 0 8px 25px var(--card-shadow);
+            border: 1px solid var(--border-color-light);
+            margin-bottom: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            opacity: 0; transform: translateY(20px);
+            animation: cardFadeInUp 0.6s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+        }
+        @keyframes cardFadeInUp { to { opacity: 1; transform: translateY(0); } }
+        .custom-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+            background-color: var(--accent-lighter);
+        }
+        .custom-card h2, .custom-card h3, .custom-card h4 { color: var(--white); }
+        .custom-card p, .custom-card li { color: var(--light-secondary); line-height: 1.7; margin-bottom: 1rem; }
+        .custom-card p:last-child { margin-bottom: 0; }
+        .custom-card strong { color: var(--light); }
+        .custom-card img { border-radius: 0.75rem; margin-bottom: 1.5rem; width: 100%; height: auto; max-height: 450px; object-fit: cover; }
+        .custom-card ul, .custom-card ol { padding-left: 1.25rem; }
+        .custom-card ul li { margin-bottom: 0.75rem; }
+        .custom-card ul.styled-list { list-style: none; padding-left: 0; margin-top: 1.5rem; }
+        .custom-card ul.styled-list li {
+            position: relative; padding-left: 2.2rem;
+            margin-bottom: 1rem; font-size: 1rem;
+            display: flex; align-items: flex-start; gap: 0.5rem;
+        }
+        .custom-card ul.styled-list.compact-list li {
+            margin-bottom: 0.5rem;
+        }
+        .custom-card ul.styled-list.emergency-list li {
+            margin-bottom: 0.25rem;
+        }
+        .custom-card ul.styled-list li i {
+            flex-shrink: 0; color: var(--primary); font-size: 1rem;
+            background-color: rgba(243, 223, 217, 0.1);
+            width: 24px; height: 24px; display: inline-flex;
+            align-items: center; justify-content: center;
+            border-radius: 50%; margin-top: 2px;
+        }
+        .custom-card ul.styled-list li div { flex-grow: 1; }
+        .custom-card ul.styled-list li div h3 { margin-bottom: 0.25rem; font-size: 1.1rem; margin-top: 0; }
+        .custom-card ul.styled-list li div p { margin-bottom: 0; line-height: 1.5; }
+        .custom-card .border-b { border-color: var(--border-color-light); }
+        .custom-card .welcome-icon, .custom-card .info-icon { color: var(--primary); margin-right: 0.5rem; font-size: 1.1em; }
+        .tourist-tax-emphasis { color: var(--primary); font-weight: 600; }
+        .penalty-info { font-size: 0.85em; color: var(--secondary); display: block; margin-top: 0.25rem; }
+
+        /* Stile Pulsanti */
+        .btn {
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 0.6rem;
+            padding: 0.8rem 2rem;
+            border-radius: 999px;
+            font-weight: 600; font-family: 'Poppins', sans-serif;
+            text-align: center; text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer; border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            font-size: 0.9rem; line-height: 1.2;
+        }
+        .btn:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+        .btn:active {
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+        .btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px var(--focus-ring-color);
+        }
+        .btn[disabled] { opacity: 0.5; cursor: not-allowed; pointer-events: none; box-shadow: none; transform: none; }
+        .btn-primary { background: var(--primary); color: var(--dark); }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-accent { background: var(--primary); color: var(--dark); }
+        .btn-accent:hover { background: var(--primary-dark); }
+        .btn-secondary { background: var(--secondary); color: var(--dark); }
+        .btn-secondary:hover { background: var(--secondary-dark); }
+        .btn-success { background-color: #10b981; color: var(--white); }
+        .btn-success:hover { filter: brightness(90%); }
+        .btn-sm { padding: 0.5rem 1.2rem; font-size: 0.8rem; }
+        .btn-map { background-color: #4CAF50; color: white; }
+        .btn-map:hover { background-color: #45a049; }
+        .btn-info { background-color: #2196F3; color: white; }
+        .btn-info:hover { background-color: #1e88e5; }
+        .btn-download { background-color: #FFC107; color: var(--dark); }
+        .btn-download:hover { background-color: #ffb300; }
+        .btn-video { background-color: var(--danger); color: white; }
+        .btn-video:hover { background-color: #d32f2f; }
+
+        /* Pulsanti a Icona (Home Page) */
+        .icon-button-wrapper {
+            background-color: var(--accent-light);
+            border-radius: 1.25rem; padding: 1.5rem;
+            box-shadow: 0 8px 25px var(--card-shadow);
+            border: 1px solid var(--border-color-light);
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            aspect-ratio: 1 / 1;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-decoration: none; color: var(--light);
+        }
+        .icon-button-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+            background-color: var(--accent-lighter);
+        }
+        .icon-button-wrapper i {
+            font-size: 2.2rem; color: var(--primary);
+            margin-bottom: 0.75rem; transition: color 0.3s ease;
+        }
+        .icon-button-wrapper span {
+            font-family: 'Montserrat', sans-serif; font-size: 0.8rem;
+            font-weight: 600; color: var(--light); line-height: 1.3;
+        }
+        .icon-button-wrapper:hover i { color: var(--primary-dark); }
+
+        /* Box Video Tutorial (Check-in) */
+        .video-tutorial-box {
+            background-color: var(--accent-lighter);
+            border: 1px solid var(--border-color-light);
+            border-radius: 1rem; padding: 1.5rem;
+            margin-bottom: 2rem; text-align: center;
+        }
+        .video-tutorial-box h3 { margin-top: 0; margin-bottom: 1rem; font-size: 1.4rem; }
+
+        /* Indicatore Step (Check-in) */
+        .step-indicator {
+            display: flex; justify-content: center; align-items: center;
+            gap: 0.5rem; margin-bottom: 1.5rem;
+        }
+        .step-dot {
+            width: 10px; height: 10px; border-radius: 50%;
+            background-color: var(--secondary); transition: all 0.3s ease;
+        }
+        .step-dot.active { background-color: var(--primary); transform: scale(1.2); }
+
+        /* Contenitore Step (Check-in) */
+        #checkin-steps-container {
+            position: relative; overflow: hidden;
+            min-height: 400px;
+            margin-bottom: 1.5rem;
+        }
+        .step-content {
+            display: none;
+            animation: stepFadeIn 0.4s ease forwards;
+            position: absolute; top: 0; left: 0; width: 100%;
+            padding: 0 0.5rem;
+        }
+        .step-content.active { display: block; position: relative; }
+        @keyframes stepFadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .step-content img { margin-top: 1rem; margin-bottom: 1.5rem; border-radius: 0.5rem; width: 100%; height: auto; max-height: 300px; object-fit: cover; }
+        .step-content h3 { color: var(--white); margin-bottom: 0.75rem; margin-top: 0; font-size: 1.6rem; font-weight: 800; font-family: 'Montserrat', sans-serif; text-align: left; }
+        .step-content p { color: var(--light-secondary); margin-bottom: 0.5rem; font-size: 1rem; text-align: left; line-height: 1.6; }
+        #checkin .custom-card { display: flex; flex-direction: column; }
+        #checkin .step-navigation {
+            margin-top: auto;
+            padding-top: 1.5rem; display: flex; justify-content: space-between;
+        }
+
+        /* Placeholder QR Code */
+        .qr-placeholder {
+            width: 150px; height: 150px; background-color: var(--light);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--dark); font-size: 0.8rem; font-family: monospace;
+            border-radius: 8px; margin: 1rem auto;
+            border: 1px solid var(--secondary);
+        }
+
+        /* Stile FAQ / Guida alla Casa (Accordion) */
+        .faq-item { border-bottom: 1px solid var(--border-color-light); }
+        .faq-item:last-child { border-bottom: none; }
+        .faq-item summary {
+            font-weight: 600; color: var(--light); cursor: pointer;
+            padding: 1.25rem 0; list-style: none;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: color 0.2s ease;
+        }
+        .faq-item summary:hover { color: var(--primary); }
+        .faq-item summary::-webkit-details-marker { display: none; }
+        .faq-item summary .summary-icon {
+            color: var(--primary);
+            margin-right: 0.75rem;
+            font-size: 1.1em;
+            flex-shrink: 0;
+        }
+        .faq-item summary .summary-text {
+            flex-grow: 1;
+        }
+        .faq-item summary::after {
+            content: '+'; font-size: 1.5rem; font-weight: 300;
+            color: var(--secondary); transition: transform 0.3s ease, color 0.2s ease;
+            margin-left: 1rem;
+        }
+        .faq-item[open] summary { color: var(--primary); }
+        .faq-item[open] summary::after { content: '−'; transform: rotate(180deg); color: var(--primary); }
+        .faq-item div {
+            padding: 0.5rem 0 1.5rem 0; color: var(--light-secondary);
+            font-size: 0.95rem; line-height: 1.7;
+            animation: faqFadeIn 0.4s ease;
+        }
+        @keyframes faqFadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+        .faq-item div p { margin-bottom: 0.5rem; }
+        .faq-item div p:last-child { margin-bottom: 0; }
+
+        /* Box Messaggi (feedback copia, ecc.) */
+        #messageBox {
+            position: fixed; bottom: 1.5rem; right: 1.5rem;
+            background-color: var(--primary); color: var(--dark);
+            padding: 0.8rem 1.5rem; border-radius: 0.75rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.25);
+            font-size: 0.9rem; font-weight: 500; z-index: 1001;
+            opacity: 0; transform: translateY(10px);
+            transition: opacity 0.3s ease, transform 0.3s ease, visibility 0s linear 0.3s;
+            visibility: hidden;
+        }
+        #messageBox.show {
+            opacity: 1; transform: translateY(0); visibility: visible;
+            transition-delay: 0s;
+        }
+        #messageBox.success { background-color: var(--success); color: var(--white); }
+
+        /* Stile Pagine e Transizioni */
+        .page { display: none; }
+        .page.active {
+            display: block;
+            animation: pageSlideFadeIn 0.6s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+        }
+        @keyframes pageSlideFadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Sezione Regole: Stili Uniformi per Titoli e Icone (CORRETTO) --- */
+        #regole .custom-card h3 {
+            display: flex !important;
+            align-items: center !important;
+            gap: 0.75rem !important;
+            font-size: 1.2rem !important;
+            font-weight: 700 !important;
+            color: var(--white) !important;
+            margin-top: 1.75rem !important;
+            margin-bottom: 0.75rem !important;
+        }
+        #regole .custom-card h3:first-of-type {
+            margin-top: 0 !important;
+        }
+        #regole .custom-card h3 .info-icon {
+             font-size: 1.1em;
+             margin-right: 0;
+             color: var(--primary);
+             flex-shrink: 0;
+        }
+        #regole .custom-card p {
+             padding-left: calc(1.1em + 0.75rem);
+             margin-bottom: 1.25rem;
+        }
+        #regole .custom-card p:last-of-type, #regole .custom-card p:has(+ h3) {
+             margin-bottom: 0;
+         }
+        /* --- Fine Stili Sezione Regole --- */
+
+
+        /* Media Queries per Responsive Design */
+        @media (max-width: 768px) { /* Tablet e schermi piccoli */
+            .container-lg { padding-left: 1rem; padding-right: 1rem; padding-top: calc(var(--nav-height-actual, 60px) + 1rem); padding-bottom: 4rem; }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; } /* Griglia home 2 colonne */
+            .posti-grid { grid-template-columns: 1fr; gap: 1.5rem; } /* Griglia posti 1 colonna */
+            .fixed-header { padding: 0 0.5rem; height: 60px; } /* Header più piccolo */
+            #header-custom-logo { height: 40px; }
+            #backButton { font-size: 1.2rem; padding: 0.4rem; }
+            .lang-selector { gap: 0.3rem; }
+            .lang-btn { font-size: 0.7rem; padding: 0.15rem 0.4rem; }
+            .custom-card { padding: 1.5rem; margin-bottom: 1.5rem; }
+            h2 { font-size: 1.6rem; }
+            h3 { font-size: 1.2rem; }
+            .step-content h3 { font-size: 1.4rem; }
+            .step-content p { font-size: 0.9rem; }
+            .icon-button-wrapper { padding: 1rem; border-radius: 1rem;}
+            .icon-button-wrapper i { font-size: 1.8rem; }
+            .icon-button-wrapper span { font-size: 0.7rem; }
+            .btn { padding: 0.7rem 1.5rem; font-size: 0.85rem; }
+            .btn-sm { padding: 0.4rem 1rem; font-size: 0.75rem;}
+            #checkin-steps-container { min-height: 380px; }
+            .market-grid { grid-template-columns: 1fr; } /* Griglia market 1 colonna */
+        }
+        @media (max-width: 480px) { /* Smartphone */
+            .container-lg { padding-left: 0.8rem; padding-right: 0.8rem; padding-top: calc(var(--nav-height-actual, 56px) + 0.8rem);}
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 0.8rem; } /* Griglia home 2 colonne */
+            .custom-card { padding: 1.2rem; }
+            .fixed-header { height: 56px; }
+            #header-custom-logo { height: 36px; }
+            .step-content h3 { font-size: 1.3rem; }
+            .icon-button-wrapper { padding: 0.8rem; border-radius: 0.75rem;}
+            .icon-button-wrapper i { font-size: 1.6rem; }
+            .icon-button-wrapper span { font-size: 0.65rem; }
+            .address-copy-wrapper { flex-wrap: wrap; } /* Permette al pulsante copia di andare a capo */
+        }
+
+        /* Stile Mappa */
+        .map-container {
+            width: 100%; height: 250px; border-radius: 0.75rem;
+            overflow: hidden; /* Nasconde bordi iframe */
+            border: 1px solid var(--border-color-light); margin-bottom: 1rem;
+        }
+        .map-container iframe { width: 100%; height: 100%; border: 0; }
+        .address-copy-wrapper { /* Contenitore indirizzo + pulsante copia */
+            display: flex; align-items: center; gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Griglia Market */
+        .market-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* Griglia responsiva */
+            gap: 1.5rem;
+        }
+        .market-item {
+            background-color: var(--accent-lighter); border-radius: 12px;
+            padding: 1rem; display: flex; align-items: center; justify-content: space-between;
+            border: 1px solid var(--border-color-light);
+        }
+        .market-item img { height: 28px; margin-bottom: 0.5rem; filter: brightness(1.5); /* Rende i loghi più visibili */ }
+        .market-item .market-name { font-weight: 600; color: var(--light); font-family: 'Montserrat', sans-serif; font-size: 0.95rem;}
+        .market-item .market-distance { font-size: 0.8rem; color: var(--light-secondary); }
+        .market-item .btn-map { flex-shrink: 0; margin-left: 0.5rem; } /* Evita che il pulsante si restringa */
+
+        /* Lista Negozi Specializzati */
+        .shop-list { display: flex; flex-direction: column; gap: 1.5rem; }
+        .shop-item {
+            background-color: var(--accent-lighter); border-radius: 12px;
+            overflow: hidden; /* Per angoli arrotondati immagine */
+            border: 1px solid var(--border-color-light);
+            display: flex; flex-direction: column; /* Immagine sopra, contenuto sotto */
+        }
+        .shop-item img { width: 100%; height: 140px; object-fit: cover; display: block; flex-shrink: 0;}
+        .shop-item .shop-item-content { padding: 1.25rem; flex-grow: 1; display: flex; flex-direction: column;}
+        .shop-item h4 { font-weight: 600; font-size: 1.1rem; margin-bottom: 0.25rem; color: var(--white); font-family: 'Montserrat', sans-serif;}
+        .shop-item .shop-distance { font-size: 0.8rem; color: var(--light-secondary); margin-bottom: 0.5rem; }
+        .shop-item .shop-description { font-size: 0.9rem; margin-bottom: 1rem; color: var(--light-secondary); flex-grow: 1;} /* Occupa spazio verticale */
+        .shop-item .btn-map { margin-top: auto; } /* Pulsante in fondo */
+
+        /* Lista Convenzioni */
+        .convenzioni-list { display: flex; flex-direction: column; gap: 2rem; }
+        .convenzione-layout { display: flex; flex-direction: column; gap: 1.5rem; } /* Layout mobile */
+        .convenzione-image img { border-radius: 8px; width: 100%; height: auto; max-height: 200px; object-fit: cover;}
+        .convenzione-logo { height: 32px; margin-bottom: 0.75rem; width: auto; filter: brightness(1.5); }
+        .convenzione-content h3 { font-weight: 600; font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--white); }
+        .convenzione-content p { font-size: 0.95rem; margin-bottom: 0.75rem; color: var(--light-secondary);}
+        .convenzione-content .discount { /* Stile sconto */
+             color: var(--primary); background: rgba(243, 223, 217, 0.1);
+             padding: 0.1rem 0.4rem; border-radius: 4px; font-weight: 600; display: inline-block;
+        }
+        .convenzione-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
+        @media (min-width: 768px) { /* Layout desktop convenzioni */
+            .convenzione-layout { flex-direction: row; align-items: center; } /* Immagine a sinistra, testo a destra */
+            .convenzione-image { flex-shrink: 0; width: 33%; }
+            .convenzione-content { flex-grow: 1; }
+        }
+
+        /* Griglia Posti da Visitare */
+        .posti-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Griglia responsiva */
+            gap: 1.5rem;
+        }
+        .posto-card { /* Card specifica per i posti */
+            display: flex; flex-direction: column; /* Immagine sopra, contenuto sotto */
+            background-color: var(--accent-light); border-radius: 1.25rem;
+            box-shadow: 0 8px 25px var(--card-shadow);
+            border: 1px solid var(--border-color-light); overflow: hidden;
+        }
+        .posto-card img { width: 100%; height: 180px; object-fit: cover; flex-shrink: 0; }
+        .posto-content { display: flex; flex-direction: column; flex-grow: 1; padding: 1.5rem; }
+        .posto-content h3 { font-weight: 600; font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--white); }
+        .posto-content p { font-size: 0.95rem; margin-bottom: 1rem; flex-grow: 1; min-height: 3.5em; color: var(--light-secondary); } /* Assicura altezza minima descrizione */
+        .posto-actions { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: auto; padding-top: 0.5rem; } /* Pulsanti in fondo */
+
+        /* Info Contatti (in fondo alle Regole) */
+        .contact-info {
+            margin-top: 2rem; padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color-light); /* Separatore */
+            text-align: center;
+        }
+        .contact-info p { margin-bottom: 0.5rem; color: var(--light-secondary); }
+        .contact-info a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .contact-info a:hover { text-decoration: underline; color: var(--primary-dark); }
+
+        /* --- Stili per le nuove funzionalità Gemini --- */
+        .gemini-feature-box {
+            background-color: rgba(243, 223, 217, 0.05); /* Usando var(--primary) ma con alpha */
+            border: 1px solid rgba(243, 223, 217, 0.2);
+            border-radius: 1.25rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .gemini-feature-box h3 {
+            color: var(--primary);
+            font-weight: 700;
+        }
+        /* --- Stili per Input Itinerario (CORRETTO) --- */
+        #itinerary-interests, #itinerary-days {
+            background-color: var(--accent-lighter) !important;
+            color: var(--light) !important;
+            border: 1px solid var(--secondary) !important;
+        }
+        #itinerary-interests::placeholder {
+            color: var(--light-secondary) !important;
+            opacity: 1;
+        }
+        #itinerary-result, #daily-tip-container {
+            background-color: var(--accent-light);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border: 1px solid var(--border-color-light);
+        }
+        #itinerary-result h1, #itinerary-result h2, #itinerary-result h3 {
+            color: var(--primary);
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        #itinerary-result ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+        #itinerary-result p, #itinerary-result li {
+             color: var(--light-secondary);
+        }
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 5px solid var(--primary);
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+            margin: 1rem auto;
+        }
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .story-waves-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none; /* così non blocca i click */
+        }
+        .story-waves-bg {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        /* Stile Footer Fisso */
+        .page-footer {
+            margin-top: 2rem;
+            padding: 1.5rem 1rem;
+            border-top: 1px solid var(--border-color-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            width: 100%;
+        }
+        .social-links a {
+            color: var(--light-secondary);
+            font-size: 1.5rem;
+            transition: color 0.2s ease, transform 0.2s ease;
+        }
+        .social-links a:hover {
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+        .linktree-btn {
+            padding: 0.4rem 1rem;
+        }
+    </style>
+</head>
+
+<body class="bg-accent">
+    <div class="story-waves-container">
+        <canvas class="story-waves-bg" id="storyWavesBg"></canvas>
+    </div>
+    
+    <header class="fixed-header">
+        <div class="header-left">
+            <button id="backButton" aria-label="Indietro">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <img id="header-custom-logo" src="https://i.imgur.com/aazwI7x.png" alt="Logo B&B"
+                 onerror="this.onerror=null; this.src='https://placehold.co/100x40/f3dfd9/232323?text=Logo';">
+        </div>
+
+        <div class="header-right">
+            <div class="lang-selector">
+                <button id="lang-it" class="lang-btn" onclick="setLanguage('it')">IT</button>
+                <button id="lang-en" class="lang-btn" onclick="setLanguage('en')">EN</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container-lg">
+
+        <div id="home" class="page active" data-title="Welcome Book">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-3" data-translate-key="home_greeting">CARI OSPITI, Benvenuti!</h2>
+                <p class="text-lg text-light-secondary" data-translate-key="home_subtitle">Clicca sulle icone per esplorare</p>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6">
+                 <a href="#benvenuto" class="icon-button-wrapper" onclick="event.preventDefault(); showPage('benvenuto')"> <i class="fas fa-home"></i> <span data-translate-key="home_btn_welcome">BENVENUTO</span> </a>
+                 <a href="#come_arrivare" class="icon-button-wrapper" onclick="event.preventDefault(); showPage('come_arrivare')"> <i class="fas fa-route"></i> <span data-translate-key="home_btn_directions">COME ARRIVARE</span> </a>
+                 <a href="#checkin_checkout_hub" class="icon-button-wrapper" onclick="event.preventDefault(); showPage('checkin_checkout_hub')"> <i class="fas fa-key"></i> <span data-translate-key="home_btn_checkin_out">CHECK-IN / OUT</span> </a>
+                 <a href="#wifi" class="icon-button-wrapper" onclick="event.preventDefault(); showPage('wifi')"> <i class="fas fa-wifi"></i> <span data-translate-key="home_btn_wifi">WIFI</span> </a>
+                 <a href="#regole" class="icon-button-wrapper" onclick="event.preventDefault(); showPage('regole')"> <i class="fas fa-list-alt"></i> <span data-translate-key="home_btn_rules">REGOLE CASA</span> </a>
+                 <a href="#market" class="icon-button-wrapper" onclick="event.preventDefault(); showPage('market')"> <i class="fas fa-store"></i> <span data-translate-key="home_btn_market">MARKET</span> </a>
+                 <a href="#convenzioni" class="icon-button-wrapper" onclick="event.preventDefault(); showPage('convenzioni')"> <i class="fas fa-tags"></i> <span data-translate-key="home_btn_deals">CONVENZIONI</span> </a>
+                 <a href="#posti" class="icon-button-wrapper" onclick="event.preventDefault(); showPage('posti')"> <i class="fas fa-map-signs"></i> <span data-translate-key="home_btn_places">POSTI DA VISITARE</span> </a>
+                 <a href="#guida_casa" class="icon-button-wrapper" onclick="event.preventDefault(); showPage('guida_casa')"> <i class="fas fa-book-open"></i> <span data-translate-key="home_btn_guide">GUIDA ALLA CASA</span> </a>
+                 <a href="#arrivederci" class="icon-button-wrapper" onclick="event.preventDefault(); showPage('arrivederci')"> <i class="fas fa-hand-peace"></i> <span data-translate-key="home_btn_goodbye">ARRIVEDERCI</span> </a>
+            </div>
+        </div>
+
+        <div id="benvenuto" class="page" data-title="Benvenuto">
+            <div class="custom-card">
+                <h2 data-translate-key="welcome_title_new"><i class="fas fa-party-horn welcome-icon"></i> Benvenuti nella Tranquillità di Bacucco: Il Vostro Rifugio sul Mare</h2>
+                <p data-translate-key="welcome_greeting_new">Cari ospiti,</p>
+                <p data-translate-key="welcome_intro_new">Siamo lieti di darvi il benvenuto nel nostro accogliente alloggio, il luogo ideale per vivere un soggiorno indimenticabile tra natura e mare a Chioggia.</p>
+            </div>
+            
+            <div class="custom-card gemini-feature-box">
+                <h3 data-translate-key="gemini_tip_title">✨ Un Consiglio per Voi</h3>
+                <p data-translate-key="gemini_tip_desc">Ogni giorno chiediamo a un esperto locale un suggerimento speciale per la tua giornata a Chioggia. Scopri quello di oggi!</p>
+                <div id="daily-tip-container" class="hidden"></div>
+                <div id="daily-tip-loader" class="text-center hidden"><div class="loader"></div></div>
+            </div>
+
+            <div class="custom-card">
+                <h3 data-translate-key="welcome_subtitle_location"><i class="fas fa-map-marker-alt welcome-icon"></i> Posizione Strategica</h3>
+                <p data-translate-key="welcome_location_desc">Situato nella tranquilla località di Bacucco, il nostro monolocale offre un rifugio perfetto a soli 30 metri dalla splendida spiaggia dell'Isola Verde. Con parcheggio privato incluso, potrete facilmente raggiungere il centro storico di Chioggia in auto, pronti a scoprire le meraviglie della "Piccola Venezia" e le tradizioni marinare locali.</p>
+                <div class="mt-8 text-center">
+                    <a href="#come_arrivare" class="btn btn-primary" onclick="event.preventDefault(); showPage('come_arrivare')">
+                        <i class="fas fa-route"></i> <span data-translate-key="btn_show_directions">Scopri come arrivare</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="checkin_checkout_hub" class="page" data-title="Check-in / Check-out">
+             <div class="custom-card text-center max-w-md mx-auto"> <h2 data-translate-key="checkin_hub_title">Check-in & Check-out</h2>
+                 <p class="text-light-secondary mb-8" data-translate-key="checkin_hub_prompt">Seleziona l'informazione:</p>
+                 <div class="flex flex-col space-y-4"> <a href="#checkin" class="btn btn-primary w-full justify-center" onclick="event.preventDefault(); showPage('checkin')">
+                         <i class="fas fa-sign-in-alt"></i><span data-translate-key="checkin_hub_btn_in">Vedi Procedura di Check-in</span>
+                    </a>
+                    <a href="#checkout" class="btn btn-secondary w-full justify-center" onclick="event.preventDefault(); showPage('checkout')">
+                         <i class="fas fa-sign-out-alt"></i><span data-translate-key="checkin_hub_btn_out">Vedi Procedura di Check-out</span>
+                    </a>
+                 </div>
+            </div>
+        </div>
+
+        <div id="checkin" class="page" data-title="Procedura Check-in">
+            <div class="custom-card">
+                 <h2 class="flex justify-between items-center mb-6"> <span data-translate-key="checkin_title">Check-in</span>
+                    <span class="text-sm font-normal text-light-secondary" data-translate-key="checkin_time">(Dalle 15:00)</span>
+                </h2>
+
+                <div class="video-tutorial-box">
+                    <h3 data-translate-key="checkin_video_title">Video Tutorial Check-in</h3>
+                    <p class="text-light-secondary mb-4" data-translate-key="checkin_video_desc">Preferisci un video? Guarda il tutorial completo per un check-in facile e veloce.</p>
+                    <a href="https://youtube.com/shorts/kMiSRLOnVJA?feature=share" target="_blank" rel="noopener noreferrer" class="btn btn-video">
+                        <i class="fas fa-play-circle"></i> <span data-translate-key="checkin_video_button">Guarda Ora</span>
+                    </a>
+                </div>
+
+                <div class="step-indicator mt-4 mb-6" id="checkin-step-indicator"></div>
+                <div id="checkin-steps-container">
+                    <div class="step-content" data-step="1">
+                        <h3 data-translate-key="checkin_step1_title_c">STEP 1: ACCESSO PEDONALE</h3>
+                        <img src="https://i.imgur.com/umKCowI.jpeg" alt="Cancelletto pedonale grigio" onerror="this.onerror=null; this.src='https://placehold.co/600x350/cccccc/ffffff?text=Immagine+non+disp.';">
+                        <p data-translate-key="checkin_step1_desc_c">Raggiungere Residenze di Magnolie e localizzare il cancelletto grigio sulla sinistra del cancello principale. Il cancelletto è sempre aperto - attraversarlo per entrare nella proprietà.</p>
+                    </div>
+                    <div class="step-content" data-step="2">
+                        <h3 data-translate-key="checkin_step2_title_c">STEP 2: RAGGIUNGERE L'APPARTAMENTO</h3>
+                        <img src="https://i.imgur.com/grX9NRt.jpeg" alt="Vialetto interno del residence" onerror="this.onerror=null; this.src='https://placehold.co/600x350/cccccc/ffffff?text=Immagine+non+disp.';">
+                        <p data-translate-key="checkin_step2_desc_c">Camminare dritto lungo il vialetto interno, poi svoltare a sinistra sulla stradina sterrata che costeggia gli appartamenti. Proseguire tenendo gli appartamenti sulla destra fino a raggiungere l'Appartamento N.5.</p>
+                    </div>
+                    <div class="step-content" data-step="3">
+                        <h3 data-translate-key="checkin_step3_title_c">STEP 3: RECUPERARE LE CHIAVI</h3>
+                        <img src="https://i.imgur.com/NCMYIu9.jpeg" alt="Cassetta di sicurezza Master Lock sul terrazzo" onerror="this.onerror=null; this.src='https://placehold.co/600x350/cccccc/ffffff?text=Immagine+non+disp.';">
+                        <p data-translate-key="checkin_step3_desc_c">Sul terrazzino dell'Appartamento N.5, aprire la Master Lock con il codice 2-5-0-5. All'interno troverete le chiavi dell'appartamento e il telecomando per il cancello automatico.</p>
+                    </div>
+                    <div class="step-content" data-step="4">
+                        <h3 data-translate-key="checkin_step4_title_c">STEP 4: ACCESSO CON VEICOLO (se necessario)</h3>
+                        <img src="https://i.imgur.com/nu659Pe.jpeg" alt="Cancello automatico per auto" onerror="this.onerror=null; this.src='https://placehold.co/600x350/cccccc/ffffff?text=Immagine+non+disp.';">
+                        <p data-translate-key="checkin_step4_desc_c">Tornare al cancello principale e avvicinare il telecomando al sensore sul palo. Entrare con l'auto e parcheggiare nel posto N.5 (stesso numero dell'appartamento).</p>
+                    </div>
+                    <div class="step-content" data-step="5">
+                        <h3 data-translate-key="checkin_step5_title_c">STEP 5: INGRESSO NEL RESIDENCE</h3>
+                        <img src="https://a0.muscache.com/im/pictures/miso/Hosting-1422423364990945096/original/ffb9fbe9-be6e-47ef-9c03-452e4e6c668d.jpeg?im_w=1200" alt="Porta di ingresso del condominio" onerror="this.onerror=null; this.src='https://placehold.co/600x350/cccccc/ffffff?text=Immagine+non+disp.';">
+                        <p data-translate-key="checkin_step5_desc_c">Dirigersi verso l'ingresso principale della residenza e utilizzare le chiavi per aprire la porta d'ingresso del condominio.</p>
+                    </div>
+                    <div class="step-content" data-step="6">
+                        <h3 data-translate-key="checkin_step6_title_c">STEP 6: ACCESSO ALL'APPARTAMENTO</h3>
+                        <img src="https://i.imgur.com/Zfys3qV.png" alt="Porta dell'appartamento N.5" onerror="this.onerror=null; this.src='https://placehold.co/600x350/cccccc/ffffff?text=Immagine+non+disp.';">
+                        <p data-translate-key="checkin_step6_desc_c">Raggiungere l'Appartamento N.5 e aprire la porta con le chiavi. Benvenuti!</p>
+                    </div>
+                </div>
+                <div class="step-navigation">
+                    <button class="btn btn-secondary" id="checkin-prev" onclick="navigateCheckinSteps(-1)">
+                        <i class="fas fa-arrow-left"></i> <span data-translate-key="btn_previous">Precedente</span>
+                    </button>
+                    <button class="btn btn-primary" id="checkin-next" onclick="navigateCheckinSteps(1)">
+                        <span data-translate-key="btn_next">Successivo</span> <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="checkout" class="page" data-title="Procedura Check-out">
+             <div class="custom-card">
+                 <h2 class="flex justify-between items-center"> <span data-translate-key="checkout_title_new">Come Effettuare il Check-out</span>
+                    <span class="text-sm font-normal text-light-secondary" data-translate-key="checkout_time_new">(Entro le 10:00)</span>
+                </h2>
+                <p data-translate-key="checkout_intro_new">Per aiutarci a preparare al meglio l'appartamento per i prossimi ospiti, ti chiediamo di seguire queste semplici indicazioni prima di lasciare l'alloggio:</p>
+                <ul class="styled-list mt-6">
+                    <li><i class="fas fa-shower"></i><div data-translate-key="checkout_item_towels_new"><strong>Radunare gli asciugamani usati:</strong> Per favore, lascia gli asciugamani utilizzati all'interno del lavandino del bagno.</div></li>
+                    <li><i class="fas fa-trash-alt"></i><div data-translate-key="checkout_item_trash_new"><strong>Buttare la spazzatura:</strong> Ti chiediamo gentilmente di svuotare i cestini e buttare la spazzatura negli appositi contenitori pubblici all'esterno.</div></li>
+                    <li><i class="fas fa-lightbulb"></i><div data-translate-key="checkout_item_power_new"><strong>Spegnere tutto:</strong> Prima di uscire:<br>– Spegni tutte le luci<br>– Porta il condizionatore e i termosifoni a zero<br>– Chiudi lo scuro della porta finestra</div></li>
+                    <li><i class="fas fa-key"></i><div data-translate-key="checkout_item_keys_new"><strong>Restituire le chiavi:</strong> Per favore, riponi le chiavi nella cassetta di sicurezza MasterLock esterna, la stessa usata per il check-in.</div></li>
+                    <li><i class="fas fa-euro-sign"></i><div class="tourist-tax-emphasis" data-translate-key="checkout_item_tax_new"><strong>Tassa di soggiorno:</strong> L'importo è di 1,50 € a persona per notte. Si applica agli ospiti di età compresa tra 10 e 75 anni, gli altri sono esenti. Ti preghiamo di lasciare il totale in contanti sul tavolo.</div></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="come_arrivare" class="page" data-title="Come Arrivare">
+            <div class="custom-card max-w-lg mx-auto">
+                <h2 data-translate-key="directions_title" class="text-center">Come Arrivare al Vostro Rifugio sul Mare</h2>
+                <p data-translate-key="directions_intro" class="text-center text-light-secondary mb-8">Raggiungerci è semplice. L'alloggio si trova nella tranquilla località di Bacucco, facilmente accessibile in auto.</p>
+
+                <div class="address-copy-wrapper justify-center">
+                    <p id="property-address" class="text-light-secondary font-mono text-sm my-0">Via delle Nazioni Unite, 34, 30015 Bacucco VE</p>
+                    <button onclick="copyToClipboard(document.getElementById('property-address').textContent, this)" class="btn btn-secondary btn-sm py-1 px-2" aria-label="Copia indirizzo">
+                        <i class="fas fa-copy m-0"></i> <span class="sr-only" data-translate-key="btn_copy">Copia</span>
+                    </button>
+                </div>
+
+                <div class="map-container">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2812.88826003513!2d12.321628775742772!3d45.16911255307985!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x477e9952a55698b9%3A0x5a9c8806acf5c20e!2sVia%20delle%20Nazioni%20Unite%2C%2034%2C%2030015%20Bacucco%20VE!5e0!3m2!1sit!2sit!4v1752940197136!5m2!1sit!2sit" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+
+                <a href="https://www.google.com/maps/search/?api=1&query=Via+delle+Nazioni+Unite,+34,+30015+Bacucco+VE" target="_blank" rel="noopener noreferrer" class="btn btn-map w-full justify-center mb-6">
+                    <i class="fas fa-map-marker-alt"></i> <span data-translate-key="directions_hub_btn_map">Apri su Google Maps</span>
+                </a>
+
+                <h3><i class="fas fa-car-side info-icon"></i> <span data-translate-key="directions_car_title">Indicazioni Stradali</span></h3>
+                <p data-translate-key="directions_car_desc">Dall'autostrada A4, prendi l'uscita Padova Est e segui le indicazioni per Piove di Sacco e successivamente per Chioggia. Una volta a Chioggia, segui la segnaletica per Sottomarina e poi per Isola Verde / Bacucco. L'appartamento si trova all'interno del <strong>Residence Le Magnolie</strong>.</p>
+                
+                <h3><i class="fas fa-parking info-icon"></i> <span data-translate-key="directions_parking_title">Parcheggio</span></h3>
+                <p data-translate-key="directions_parking_desc">Un parcheggio privato è a vostra completa disposizione gratuitamente. Troverete il vostro posto auto riservato, il <strong>numero 5</strong>, direttamente presso la struttura, per un arrivo comodo e senza pensieri.</p>
+            </div>
+        </div>
+
+        <div id="wifi" class="page" data-title="Informazioni WiFi">
+            <div class="custom-card text-center max-w-md mx-auto"> <i class="fas fa-wifi text-5xl mb-4 text-primary"></i> <h2 data-translate-key="wifi_title">Informazioni Wi-Fi</h2>
+                <div class="mb-4">
+                    <p class="font-semibold mb-1 text-light" data-translate-key="wifi_ssid_label">Network (SSID):</p>
+                    <p id="wifi-ssid" class="font-mono bg-accent text-light px-4 py-2 rounded-lg inline-block border border-secondary">WebPocket-3DB0</p>
+                </div>
+                <div class="mb-6">
+                    <p class="font-semibold mb-1 text-light" data-translate-key="wifi_password_label">Password:</p>
+                    <p id="wifi-password" class="font-mono bg-accent text-light px-4 py-2 rounded-lg inline-block border border-secondary">51D42GNJ</p>
+                       <button id="copy-wifi-btn" onclick="copyToClipboard('51D42GNJ', this)" class="btn btn-secondary btn-sm ml-2 align-baseline">
+                           <i class="fas fa-copy"></i> <span data-translate-key="btn_copy">Copia</span>
+                       </button>
+                </div>
+                <div>
+                       <a href="WIFI:T:WPA;S:WebPocket-3DB0;P:51D42GNJ;;" class="btn btn-primary">
+                           <i class="fas fa-signal"></i> <span data-translate-key="wifi_connect_button">Connettiti al Wi-Fi</span>
+                       </a>
+                       <p class="text-xs text-light-secondary mt-2" data-translate-key="wifi_connect_instruction">Connessione automatica (solo da mobile)</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="regole" class="page" data-title="Regole della Casa">
+            <div class="custom-card">
+                <h2 data-translate-key="rules_title">Regole della Casa</h2>
+                <p data-translate-key="rules_intro_final">Benvenuti! Per rendere il soggiorno piacevole per tutti, vi chiediamo di rispettare alcune semplici regole durante la vostra permanenza.</p>
+
+                <h3><i class="fas fa-paw info-icon"></i> <span data-translate-key="rules_pets_title_new">Animali Domestici</span></h3>
+                <p data-translate-key="rules_pets_desc_new">Siamo felici di accogliere anche i vostri amici a quattro zampe!<br>L'appartamento è pet-friendly, ma solo per animali di piccola taglia.</p>
+
+                <h3><i class="fas fa-ban info-icon"></i> <span data-translate-key="rules_parties_title_new">Feste ed Eventi</span></h3>
+                <p data-translate-key="rules_parties_desc_new">Non è consentito organizzare feste o eventi all'interno dell'appartamento, nel rispetto del vicinato e della quiete della zona.</p>
+
+                <h3><i class="fas fa-smoking-ban info-icon"></i> <span data-translate-key="rules_smoking_title_new">Fumo</span></h3>
+                <p data-translate-key="rules_smoking_desc_new">Per mantenere un ambiente salubre per tutti, vi chiediamo di non fumare all'interno dell'appartamento.</p>
+
+                <h3><i class="fas fa-utensils info-icon"></i> <span data-translate-key="rules_kitchen_title_new">Pulizia della Cucina</span></h3>
+                <p data-translate-key="rules_kitchen_desc_new">Al momento del check-out, vi chiediamo gentilmente di lasciare piatti e stoviglie puliti.</p>
+
+                <h3><i class="fas fa-seedling info-icon"></i> <span data-translate-key="rules_sustainability_title_new">Turismo Sostenibile</span></h3>
+                <p data-translate-key="rules_sustainability_desc1_new">Aiutaci a proteggere il pianeta!<br>Risparmia energia, evita sprechi d'acqua, spegni le luci e i dispositivi quando non servono.</p>
+                <p data-translate-key="rules_sustainability_desc2_new">'SAVE THE PLANET – Aiutaci a risparmiare energia e non sprecarla.'</p>
+
+                <h3><i class="fas fa-volume-mute info-icon"></i> <span data-translate-key="rules_quiet_title_new">Orari del Silenzio</span></h3>
+                <p data-translate-key="rules_quiet_desc_new">Ti chiediamo di rispettare la quiete nei seguenti orari:<br>Dalle 22:00 alle 8:00<br>Dalle 13:00 alle 15:00<br>Evita rumori forti e chiudi le porte con delicatezza.</p>
+
+                <h3><i class="fas fa-clock info-icon"></i> <span data-translate-key="rules_checkout_title_new">Check-out</span></h3>
+                <p data-translate-key="rules_checkout_desc_new">L'appartamento deve essere lasciato entro le ore 10:00.<br>La tassa di soggiorno va lasciata sul tavolo.<br>L'alloggio è riservato esclusivamente agli ospiti registrati.</p>
+
+                <h3><i class="fas fa-tools info-icon"></i> <span data-translate-key="rules_damage_title_new">Danni</span></h3>
+                <p data-translate-key="rules_damage_desc_new">In caso di piccoli incidenti o danneggiamenti, ti chiediamo di informarci.<br>Siamo sempre disponibili per trovare la soluzione migliore.</p>
+                
+            </div>
+        </div>
+
+        <div id="market" class="page" data-title="Market & Negozi">
+             <h2 class="text-center mb-8" data-translate-key="market_title">Market & Negozi</h2>
+             <div class="custom-card mb-8">
+                 <h3 class="border-b border-border-color-light pb-3 mb-6" data-translate-key="market_section_supermarkets">Supermercati Vicini</h3>
+                 <div class="market-grid">
+                     <div class="market-item">
+                         <div>
+                             <p class="market-name">A&O Supermercato</p>
+                             <p class="market-distance" data-translate-key="market_dist_ao">1 min a piedi</p>
+                         </div>
+                         <a href="https://maps.app.goo.gl/cDD4PixtXpnbxWNe6" target="_blank" rel="noopener noreferrer" class="btn btn-map btn-sm"><i class="fas fa-map-marker-alt"></i> <span data-translate-key="btn_go">Vai</span></a>
+                     </div>
+                     <div class="market-item">
+                         <div>
+                             <p class="market-name">Moretto Market</p>
+                             <p class="market-distance" data-translate-key="market_dist_moretto">10 min a piedi / 2 in auto</p>
+                         </div>
+                         <a href="https://maps.app.goo.gl/Hi418ER3xZjv5HBQ6" target="_blank" rel="noopener noreferrer" class="btn btn-map btn-sm"><i class="fas fa-map-marker-alt"></i> <span data-translate-key="btn_go">Vai</span></a>
+                     </div>
+                     <div class="market-item">
+                         <div>
+                             <p class="market-name">Ipercoop</p>
+                             <p class="market-distance" data-translate-key="market_dist_ipercoop">10 min in auto</p>
+                         </div>
+                         <a href="https://maps.app.goo.gl/uCa4Xj43DFbSfG5u7" target="_blank" rel="noopener noreferrer" class="btn btn-map btn-sm"><i class="fas fa-map-marker-alt"></i> <span data-translate-key="btn_go">Vai</span></a>
+                     </div>
+                 </div>
+             </div>
+             <div class="custom-card">
+                 <h3 class="border-b border-border-color-light pb-3 mb-6" data-translate-key="market_section_specialty">Dove Comprare... Carne, Pesce, Gastronomia</h3>
+                 <div class="shop-list">
+                     <div class="shop-item">
+                         <img src="https://i.imgur.com/wPDVQiv.jpeg" alt="Gastronomia Salumeria al Salone" onerror="this.onerror=null; this.src='https://placehold.co/600x180/cccccc/ffffff?text=Immagine+non+disp.';">
+                         <div class="shop-item-content">
+                             <h4 data-translate-key="market_salumeria_name">Gastronomia Salumeria 'al Salone'</h4>
+                             <p class="shop-distance" data-translate-key="market_salumeria_loc">10 min in macchina</p>
+                             <p class="shop-description" data-translate-key="market_salumeria_desc">Ampio assortimento di salumi, formaggi, vini, conserve e dolci artigianali. Luogo ideale per gli appassionati di gastronomia e buon cibo.</p>
+                             <a href="https://maps.app.goo.gl/2ttCQvJy3TpHasv8A" target="_blank" rel="noopener noreferrer" class="btn btn-map btn-sm"><i class="fas fa-map-marker-alt"></i> <span data-translate-key="btn_go">Vai</span></a>
+                         </div>
+                     </div>
+                     <div class="shop-item">
+                         <img src="https://i.imgur.com/vIEAdIR.jpeg" alt="Macelleria Filippo e Tiziana" onerror="this.onerror=null; this.src='https://placehold.co/600x180/cccccc/ffffff?text=Immagine+non+disp.';">
+                         <div class="shop-item-content">
+                             <h4 data-translate-key="market_butcher_name">Filippo e Tiziana macelleria gastronomica</h4>
+                             <p class="shop-distance" data-translate-key="market_butcher_loc">Viale Mediterraneo - 13 min in macchina</p>
+                             <p class="shop-description" data-translate-key="market_butcher_desc">Macelleria storica con carni selezionate venete e tagli speciali su richiesta.</p>
+                             <a href="https://maps.app.goo.gl/nrToJ4XALjW48GDf9" target="_blank" rel="noopener noreferrer" class="btn btn-map btn-sm"><i class="fas fa-map-marker-alt"></i> <span data-translate-key="btn_go">Vai</span></a>
+                         </div>
+                     </div>
+                     <div class="shop-item">
+                         <img src="https://i.imgur.com/Xd47E5v.jpeg" alt="Pescheria Barbarigo" onerror="this.onerror=null; this.src='https://placehold.co/600x180/cccccc/ffffff?text=Immagine+non+disp.';">
+                         <div class="shop-item-content">
+                             <h4 data-translate-key="market_fish_name">Pescheria Barbarigo</h4>
+                             <p class="shop-distance" data-translate-key="market_fish_loc">13 min in macchina</p>
+                             <p class="shop-description" data-translate-key="market_fish_desc">Pesce fresco locale, crostacei e molluschi. Offre anche piatti pronti e cucina sul posto.</p>
+                             <a href="https://maps.app.goo.gl/7qrCDgSpydhduwep6" target="_blank" rel="noopener noreferrer" class="btn btn-map btn-sm"><i class="fas fa-map-marker-alt"></i> <span data-translate-key="btn_go">Vai</span></a>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+        </div>
+
+        <div id="convenzioni" class="page" data-title="Convenzioni">
+             <h2 class="text-center mb-8" data-translate-key="deals_title">Convenzioni</h2>
+             <div class="convenzioni-list">
+                 <div class="custom-card">
+                     <div class="convenzione-layout">
+                         <div class="convenzione-image">
+                             <img src="https://chioggiaspiagge.it/wp-content/uploads/2022/07/albachiara-1240x720.jpg" alt="Albachiara Beach" onerror="this.onerror=null; this.src='https://placehold.co/300x200/cccccc/ffffff?text=Immagine+non+disp.';">
+                         </div>
+                         <div class="convenzione-content">
+                             <h3 data-translate-key="deals_albachiara_title">Albachiara Beach</h3>
+                             <p data-translate-key="deals_albachiara_desc">Vivi un'estate indimenticabile! Grazie alla nostra collaborazione, come nostro ospite hai diritto a offerte esclusive.</p>
+                             <ul class="styled-list">
+                                 <li><i class="fas fa-percent"></i><div data-translate-key="deals_albachiara_offer1"><strong>5% di sconto</strong> con una spesa minima di €50</div></li>
+                                 <li><i class="fas fa-percent"></i><div data-translate-key="deals_albachiara_offer2"><strong>10% di sconto</strong> con una spesa minima di €100</div></li>
+                                 <li><i class="fas fa-umbrella-beach"></i><div data-translate-key="deals_albachiara_offer3"><strong>10% di sconto</strong> sul noleggio lettini</div></li>
+                             </ul>
+                             <div class="convenzione-actions">
+                                 <a href="https://maps.app.goo.gl/pv6MiAzPEoRL19Ce6" target="_blank" rel="noopener noreferrer" class="btn btn-map btn-sm"><i class="fas fa-map-marker-alt"></i> <span data-translate-key="btn_go">Vai</span></a>
+                                 <button onclick="downloadCoupon()" class="btn btn-download btn-sm"><i class="fas fa-download"></i> <span data-translate-key="btn_download_coupon">Scarica Buono</span></button>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+        </div>
+
+        <div id="posti" class="page" data-title="Posti da Visitare">
+            <h2 class="text-center mb-4" data-translate-key="places_title">I Tesori di Chioggia e Dintorni</h2>
+
+            <div class="custom-card gemini-feature-box">
+                <h3 data-translate-key="gemini_itinerary_title">✨ Crea il Tuo Itinerario Ideale</h3>
+                <p class="text-light-secondary mb-4" data-translate-key="gemini_itinerary_desc">Siamo qui per aiutarti a creare un'esperienza unica. Dicci cosa ti appassiona e per quanti giorni ti fermi, ti prepareremo un itinerario su misura per scoprire il meglio di Chioggia.</p>
+                <div class="flex flex-col md:flex-row gap-4 mb-4">
+                    <div class="flex-grow">
+                        <label for="itinerary-interests" class="block mb-1 text-sm font-medium text-light" data-translate-key="gemini_itinerary_interests_label">I tuoi interessi</label>
+                        <input type="text" id="itinerary-interests" class="w-full rounded-lg p-2.5" placeholder="Es. arte, cibo, relax, storia...">
+                    </div>
+                    <div>
+                        <label for="itinerary-days" class="block mb-1 text-sm font-medium text-light" data-translate-key="gemini_itinerary_days_label">Numero di giorni</label>
+                        <select id="itinerary-days" class="block w-full p-2.5 rounded-lg">
+                            <option value="1" data-translate-key="gemini_itinerary_day_1">1 Giorno</option>
+                            <option value="2" selected data-translate-key="gemini_itinerary_day_2">2 Giorni</option>
+                            <option value="3" data-translate-key="gemini_itinerary_day_3">3 Giorni</option>
+                            <option value="4" data-translate-key="gemini_itinerary_day_4">4 Giorni</option>
+                            <option value="5" data-translate-key="gemini_itinerary_day_5">5 Giorni</option>
+                        </select>
+                    </div>
+                </div>
+                <button id="generate-itinerary-btn" class="btn btn-primary w-full justify-center">
+                    <span data-translate-key="gemini_itinerary_btn_generate">Prepara il mio Itinerario</span>
+                </button>
+                <div id="itinerary-loader" class="text-center hidden mt-4"><div class="loader"></div></div>
+                <div id="itinerary-result" class="hidden prose prose-invert"></div>
+            </div>
+
+            <div class="grid posti-grid">
+                <div class="custom-card posto-card">
+                    <img src="https://www.visitchioggia.com/assets/Uploads/gallery-centro-storico/Chioggia-centro-storicojpg.jpg" alt="Centro Storico di Chioggia" onerror="this.onerror=null; this.src='https://placehold.co/600x250/cccccc/ffffff?text=Immagine+non+disp.';">
+                    <div class="posto-content">
+                        <h3 data-translate-key="places_chioggia_title">Centro Storico di Chioggia</h3>
+                        <p data-translate-key="places_chioggia_desc">Perditi tra le calli e i canali che ricordano Venezia. Passeggia lungo Corso del Popolo, il cuore pulsante della città, e ammira i pescherecci colorati lungo il Canal Vena.</p>
+                        <div class="posto-actions">
+                            <a href="https://www.google.com/maps/place/Centro+Storico,+Chioggia,+VE" target="_blank" rel="noopener noreferrer" class="btn btn-map btn-sm"><i class="fas fa-map-marker-alt"></i> <span data-translate-key="btn_go">Vai</span></a>
+                            <a href="https://www.visitchioggia.com/it/da-scoprire/citta-darte/centro-storico/" target="_blank" rel="noopener noreferrer" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i> <span data-translate-key="btn_info">Info</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-card posto-card">
+                    <img src="https://www.visitchioggia.com/assets/Uploads/gallery-sottomarina-e-isolaverde/Spiaggia-sottomarina.jpg" alt="Spiaggia di Sottomarina" onerror="this.onerror=null; this.src='https://placehold.co/600x250/cccccc/ffffff?text=Immagine+non+disp.';">
+                    <div class="posto-content">
+                        <h3 data-translate-key="places_sottomarina_title">Spiaggia di Sottomarina</h3>
+                        <p data-translate-key="places_sottomarina_desc">Goditi una giornata di sole sulla lunga spiaggia di sabbia dorata. Perfetta per famiglie, con stabilimenti balneari attrezzati e aree per sport acquatici.</p>
+                        <div class="posto-actions">
+                            <a href="https://www.google.com/maps/place/Spiaggia+di+Sottomarina" target="_blank" rel="noopener noreferrer" class="btn btn-map btn-sm"><i class="fas fa-map-marker-alt"></i> <span data-translate-key="btn_go">Vai</span></a>
+                            <a href="https://www.visitchioggia.com/it/da-scoprire/mare-e-spiagge/sottomarina-e-isolaverde/" target="_blank" rel="noopener noreferrer" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i> <span data-translate-key="btn_info">Info</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-card posto-card">
+                    <img src="https://www.visitchioggia.com/assets/Uploads/gallery-il-mercato-del-pesce/mercato-ittico7.jpg" alt="Mercato Ittico al Minuto" onerror="this.onerror=null; this.src='https://placehold.co/600x250/cccccc/ffffff?text=Immagine+non+disp.';">
+                    <div class="posto-content">
+                        <h3 data-translate-key="places_market_title">Mercato Ittico al Minuto</h3>
+                        <p data-translate-key="places_market_desc">Vivi l'atmosfera autentica del mercato del pesce più grande dell'Adriatico. Un'esplosione di suoni, colori e profumi dove scoprire il pescato locale.</p>
+                        <div class="posto-actions">
+                            <a href="https://www.google.com/maps/place/Mercato+Ittico+al+Minuto" target="_blank" rel="noopener noreferrer" class="btn btn-map btn-sm"><i class="fas fa-map-marker-alt"></i> <span data-translate-key="btn_go">Vai</span></a>
+                            <a href="https://www.chioggiapesca.it/it/mercato-ittico-al-minuto-di-chioggia" target="_blank" rel="noopener noreferrer" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i> <span data-translate-key="btn_info">Info</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-card posto-card">
+                    <img src="https://www.visitchioggia.com/assets/Uploads/gallery-sottomarina-e-isolaverde/isolaverde.jpg" alt="Spiaggia di Isola Verde" onerror="this.onerror=null; this.src='https://placehold.co/600x250/cccccc/ffffff?text=Immagine+non+disp.';">
+                    <div class="posto-content">
+                        <h3 data-translate-key="places_isolaverde_title">Spiaggia di Isola Verde</h3>
+                        <p data-translate-key="places_isolaverde_desc">Un'oasi di tranquillità immersa nel verde, con una spiaggia sabbiosa e fondali bassi, ideale per chi cerca relax e contatto con la natura.</p>
+                        <div class="posto-actions">
+                            <a href="https://www.google.com/maps/place/Spiaggia+di+Isola+Verde" target="_blank" rel="noopener noreferrer" class="btn btn-map btn-sm"><i class="fas fa-map-marker-alt"></i> <span data-translate-key="btn_go">Vai</span></a>
+                            <a href="https://www.visitchioggia.com/it/da-scoprire/mare-e-spiagge/sottomarina-e-isolaverde-2/" target="_blank" rel="noopener noreferrer" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i> <span data-translate-key="btn_info">Info</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-card posto-card">
+                    <img src="https://www.turismoitalianews.it/images/stories/varie_2023/Chioggia_TorreSantAndrea_01.jpg" alt="Torre dell'Orologio di Sant'Andrea" onerror="this.onerror=null; this.src='https://placehold.co/600x250/cccccc/ffffff?text=Immagine+non+disp.';">
+                    <div class="posto-content">
+                        <h3 data-translate-key="places_clocktower_title">Torre dell'Orologio di Sant'Andrea</h3>
+                        <p data-translate-key="places_clocktower_desc">Scopri uno degli orologi da torre funzionanti più antichi del mondo. Sali in cima per godere di una vista panoramica mozzafiato sulla città e sulla laguna.</p>
+                        <div class="posto-actions">
+                            <a href="https://www.google.com/maps/place/Torre+dell'Orologio+di+Sant'Andrea" target="_blank" rel="noopener noreferrer" class="btn btn-map btn-sm"><i class="fas fa-map-marker-alt"></i> <span data-translate-key="btn_go">Vai</span></a>
+                             <a href="https://it.wikipedia.org/wiki/Orologio_della_Torre_di_Sant%27Andrea" target="_blank" rel="noopener noreferrer" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i> <span data-translate-key="btn_info">Info</span></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="custom-card posto-card">
+                    <img src="https://bosconordio.venetoagricoltura.org/wp-content/uploads/2021/07/figura02b-scaled.jpg" alt="Riserva Naturale Integrale Bosco Nordio" onerror="this.onerror=null; this.src='https://placehold.co/600x250/cccccc/ffffff?text=Immagine+non+disp.';">
+                    <div class="posto-content">
+                        <h3 data-translate-key="places_bosco_title">Riserva Naturale Integrale Bosco Nordio</h3>
+                        <p data-translate-key="places_bosco_desc">A pochi minuti di auto, immergiti in un'antica foresta di lecci e pini. Un'oasi di pace perfetta per passeggiate rilassanti e per scoprire la flora e la fauna della duna costiera.</p>
+                        <div class="posto-actions">
+                            <a href="https://www.google.com/maps/place/Riserva+Naturale+Integrale+Bosco+Nordio" target="_blank" rel="noopener noreferrer" class="btn btn-map btn-sm"><i class="fas fa-map-marker-alt"></i> <span data-translate-key="btn_go">Vai</span></a>
+                            <a href="https://bosconordio.venetoagricoltura.org/" target="_blank" rel="noopener noreferrer" class="btn btn-info btn-sm"><i class="fas fa-info-circle"></i> <span data-translate-key="btn_info">Info</span></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="guida_casa" class="page" data-title="Guida alla Casa">
+             <h2 class="text-center mb-8" data-translate-key="house_guide_title">Guida alla Casa</h2>
+             <div class="custom-card max-w-3xl mx-auto">
+                 <details class="faq-item">
+                     <summary>
+                         <i class="fas fa-coffee summary-icon"></i>
+                         <span class="summary-text" data-translate-key="guide_q_coffee">Macchina del Caffè</span>
+                     </summary>
+                     <div>
+                         <p data-translate-key="guide_a_coffee_desc">La macchinetta del caffè è facilissima da utilizzare. Per tutte le istruzioni dettagliate su come utilizzarla, guarda il video qui sotto.</p>
+                         <a href="https://youtu.be/KHYfig93G60?si=PGhVbC-ylEQEZohk" target="_blank" rel="noopener noreferrer" class="btn btn-video btn-sm mt-2">
+                             <i class="fas fa-play-circle"></i> <span data-translate-key="guide_a_coffee_button">Guarda il Video Tutorial</span>
+                         </a>
+                     </div>
+                 </details>
+                 <details class="faq-item">
+                     <summary>
+                         <i class="fas fa-thermometer-half summary-icon"></i>
+                         <span class="summary-text" data-translate-key="guide_q_ac">Aria Condizionata</span>
+                     </summary>
+                     <div data-translate-key="guide_a_ac">
+                        <!-- Contenuto inserito da JS -->
+                     </div>
+                 </details>
+                 <details class="faq-item">
+                     <summary>
+                         <i class="fas fa-tv summary-icon"></i>
+                         <span class="summary-text" data-translate-key="guide_q_tv">Smart TV e Intrattenimento</span>
+                     </summary>
+                     <div data-translate-key="guide_a_tv">
+                        <!-- Contenuto inserito da JS -->
+                     </div>
+                 </details>
+                 <details class="faq-item">
+                     <summary>
+                         <i class="fas fa-plug summary-icon"></i>
+                         <span class="summary-text" data-translate-key="guide_q_stove">Fornelletto Elettrico</span>
+                     </summary>
+                     <div data-translate-key="guide_a_stove">
+                         <!-- Contenuto inserito da JS -->
+                     </div>
+                 </details>
+                 <details class="faq-item">
+                     <summary>
+                         <i class="fas fa-swimming-pool summary-icon"></i>
+                         <span class="summary-text" data-translate-key="guide_q_pool">Piscina</span>
+                     </summary>
+                     <div data-translate-key="guide_a_pool">
+                        <!-- Contenuto inserito da JS -->
+                     </div>
+                 </details>
+                 <details class="faq-item">
+                     <summary>
+                         <i class="fas fa-phone-alt summary-icon"></i>
+                         <span class="summary-text" data-translate-key="guide_q_contacts">Contatti Utili</span>
+                     </summary>
+                     <div data-translate-key="guide_a_contacts">
+                        <!-- Contenuto inserito da JS -->
+                     </div>
+                 </details>
+             </div>
+        </div>
+
+        <div id="arrivederci" class="page" data-title="Arrivederci e Grazie!">
+             <div class="custom-card max-w-lg mx-auto">
+                <div class="text-center">
+                    <i class="fas fa-hand-peace text-5xl mb-4 text-primary"></i>
+                    <h2 data-translate-key="goodbye_title_new">Arrivederci e Grazie!</h2>
+                    <p class="text-light-secondary" data-translate-key="goodbye_p1_new">Speriamo che il tuo soggiorno nel nostro loft sia stato indimenticabile e che Padova ti abbia conquistato.</p>
+                    <p class="text-light-secondary mb-6" data-translate-key="goodbye_p2_new">Il tuo feedback è preziosissimo per noi. Ci aiuta a crescere e a offrire un'esperienza sempre migliore. Se ti va, ti saremmo immensamente grati se potessi dedicarci un minuto del tuo tempo per lasciarci una recensione.</p>
+                    
+                    <!-- SOSTITUISCI #REVIEW_LINK CON IL TUO URL PER LE RECENSIONI -->
+                    <a href="#REVIEW_LINK" onclick="event.preventDefault();" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-2 inline-flex">
+                        <i class="fas fa-star"></i> <span data-translate-key="goodbye_btn_review">Lascia una Recensione</span>
+                    </a>
+                </div>
+                
+                <details class="faq-item mt-10">
+                    <summary>
+                       <i class="fas fa-briefcase summary-icon"></i>
+                       <span class="summary-text" data-translate-key="goodbye_pm_title">Sei un Proprietario di Casa?</span>
+                    </summary>
+                    <div class="text-center pt-4">
+                        <p data-translate-key="goodbye_pm_p1" class="mb-4">Gestire un immobile può essere complesso. Offriamo un servizio di property management completo per massimizzare i tuoi guadagni e liberarti da ogni pensiero.</p>
+                        <p data-translate-key="goodbye_pm_p2">Dalla gestione delle prenotazioni alla manutenzione, pensiamo a tutto noi.</p>
+                        <a id="pm-whatsapp-link" href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary mt-4 inline-flex">
+                            <i class="fab fa-whatsapp"></i> <span data-translate-key="goodbye_btn_pm">Contattaci su WhatsApp</span>
+                        </a>
+                    </div>
+                </details>
+
+                <div class="text-center mt-10 pt-8 border-t border-border-color-light">
+                    <h3 class="text-primary font-bold" data-translate-key="goodbye_discount_title">Un Grazie Speciale per Voi</h3>
+                    <p class="text-light-secondary mt-4" data-translate-key="goodbye_discount_p1">Per ringraziarti di averci scelto, vogliamo offrirti un codice sconto del <strong>5%</strong> sulla tua prossima prenotazione diretta.</p>
+                    <p class="text-light-secondary mt-2" data-translate-key="goodbye_discount_p2">In più, per chi ci aiuta a brillare con un feedback eccezionale, lo sconto fedeltà <strong>aumenta al 15%</strong>! È il nostro modo per dire grazie a chi ci valuta con il punteggio massimo in ogni categoria.</p>
+                    
+                    <a href="https://moorentpm.bookpage.io/it" target="_blank" rel="noopener noreferrer" class="btn btn-secondary mt-6 inline-flex">
+                        <i class="fas fa-calendar-alt"></i> <span data-translate-key="goodbye_btn_book">Prenota il tuo Prossimo Soggiorno</span>
+                    </a>
+                </div>
+
+             </div>
+        </div>
+        
+        <footer class="page-footer">
+            <div class="social-links">
+                <a href="https://www.instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+            </div>
+            <a href="https://linktr.ee" target="_blank" class="btn btn-primary btn-sm linktree-btn">
+                <i class="fas fa-link"></i>
+                <span data-translate-key="footer_linktree">Scopri di più</span>
+            </a>
+        </footer>
+    </main>
+
+    <div id="messageBox">Messaggio</div>
+
+    <script>
+        // --- Oggetto Traduzioni ---
+        const translations = {
+            it: {
+                // Generali
+                header_title_default: "Welcome Book",
+                btn_previous: "Precedente",
+                btn_next: "Successivo",
+                btn_copy: "Copia",
+                btn_copy_feedback: "Copiato",
+                btn_go: "Vai",
+                btn_info: "Info",
+                btn_download_coupon: "Scarica Buono",
+                btn_back_home: "Torna alla Home",
+                btn_show_directions: "Scopri come arrivare",
+                copied_success: "Indirizzo copiato!",
+                copy_error: "Errore copia indirizzo",
+                copy_unsupported: "Copia non supportata",
+                download_started: "Download buono avviato...",
+                download_failed: "Download fallito",
+                footer_linktree: "Scopri di più",
+                // Titoli Pagine
+                page_title_home: "Welcome Book",
+                page_title_benvenuto: "Benvenuto",
+                page_title_checkin_hub: "Check-in / Check-out",
+                page_title_checkin: "Procedura Check-in",
+                page_title_checkout: "Procedura Check-out",
+                page_title_directions: "Come Arrivare",
+                page_title_wifi: "Informazioni WiFi",
+                page_title_rules: "Regole della Casa",
+                page_title_market: "Market & Negozi",
+                page_title_deals: "Convenzioni",
+                page_title_places: "Posti da Visitare",
+                page_title_guide: "Guida alla Casa",
+                page_title_goodbye: "Arrivederci e Grazie!",
+                // Pagina Home
+                home_greeting: "CARI OSPITI, Benvenuti!",
+                home_subtitle: "Clicca sulle icone per esplorare",
+                home_btn_welcome: "BENVENUTO",
+                home_btn_directions: "COME ARRIVARE",
+                home_btn_checkin_out: "CHECK-IN / OUT",
+                home_btn_wifi: "WIFI",
+                home_btn_rules: "REGOLE CASA",
+                home_btn_market: "MARKET",
+                home_btn_deals: "CONVENZIONI",
+                home_btn_places: "POSTI DA VISITARE",
+                home_btn_guide: "GUIDA ALLA CASA",
+                home_btn_goodbye: "ARRIVEDERCI",
+                // Pagina Benvenuto
+                welcome_title_new: "Benvenuti nella Tranquillità di Bacucco: Il Vostro Rifugio sul Mare",
+                welcome_greeting_new: "Cari ospiti,",
+                welcome_intro_new: "Siamo lieti di darvi il benvenuto nel nostro accogliente alloggio, il luogo ideale per vivere un soggiorno indimenticabile tra natura e mare a Chioggia.",
+                welcome_subtitle_location: "Posizione Strategica",
+                welcome_location_desc: "Situato nella tranquilla località di Bacucco, il nostro monolocale offre un rifugio perfetto a soli 30 metri dalla splendida spiaggia dell'Isola Verde. Con parcheggio privato incluso, potrete facilmente raggiungere il centro storico di Chioggia in auto, pronti a scoprire le meraviglie della \"Piccola Venezia\" e le tradizioni marinare locali.",
+                // Hub Check-in/Check-out
+                checkin_hub_title: "Check-in & Check-out",
+                checkin_hub_prompt: "Seleziona l'informazione:",
+                checkin_hub_btn_in: "Vedi Procedura di Check-in",
+                checkin_hub_btn_out: "Vedi Procedura di Check-out",
+                // Pagina Check-in Steps
+                checkin_title: "Check-in",
+                checkin_time: "(Dalle 15:00)",
+                checkin_video_title: "Video Tutorial Check-in",
+                checkin_video_desc: "Preferisci un video? Guarda il tutorial completo per un check-in facile e veloce.",
+                checkin_video_button: "Guarda Ora",
+                checkin_step1_title_c: "STEP 1: ACCESSO PEDONALE",
+                checkin_step1_desc_c: "Raggiungere Residenze di Magnolie e localizzare il cancelletto grigio sulla sinistra del cancello principale. Il cancelletto è sempre aperto - attraversarlo per entrare nella proprietà.",
+                checkin_step2_title_c: "STEP 2: RAGGIUNGERE L'APPARTAMENTO",
+                checkin_step2_desc_c: "Camminare dritto lungo il vialetto interno, poi svoltare a sinistra sulla stradina sterrata che costeggia gli appartamenti. Proseguire tenendo gli appartamenti sulla destra fino a raggiungere l'Appartamento N.5.",
+                checkin_step3_title_c: "STEP 3: RECUPERARE LE CHIAVI",
+                checkin_step3_desc_c: "Sul terrazzino dell'Appartamento N.5, aprire la Master Lock con il codice 2-5-0-5. All'interno troverete le chiavi dell'appartamento e il telecomando per il cancello automatico.",
+                checkin_step4_title_c: "STEP 4: ACCESSO CON VEICOLO (se necessario)",
+                checkin_step4_desc_c: "Tornare al cancello principale e avvicinare il telecomando al sensore sul palo. Entrare con l'auto e parcheggiare nel posto N.5 (stesso numero dell'appartamento).",
+                checkin_step5_title_c: "STEP 5: INGRESSO NEL RESIDENCE",
+                checkin_step5_desc_c: "Dirigersi verso l'ingresso principale della residenza e utilizzare le chiavi per aprire la porta d'ingresso del condominio.",
+                checkin_step6_title_c: "STEP 6: ACCESSO ALL'APPARTAMENTO",
+                checkin_step6_desc_c: "Raggiungere l'Appartamento N.5 e aprire la porta con le chiavi. Benvenuti!",
+                // Pagina Check-out
+                checkout_title_new: "Come Effettuare il Check-out",
+                checkout_time_new: "(Entro le 10:00)",
+                checkout_intro_new: "Per aiutarci a preparare al meglio l'appartamento per i prossimi ospiti, ti chiediamo di seguire queste semplici indicazioni prima di lasciare l'alloggio:",
+                checkout_item_towels_new: "<strong>Radunare gli asciugamani usati:</strong> Per favore, lascia gli asciugamani utilizzati all'interno del lavandino del bagno.",
+                checkout_item_trash_new: "<strong>Buttare la spazzatura:</strong> Ti chiediamo gentilmente di svuotare i cestini e buttare la spazzatura negli appositi contenitori pubblici all'esterno.",
+                checkout_item_power_new: "<strong>Spegnere tutto:</strong> Prima di uscire:<br>– Spegni tutte le luci<br>– Porta il condizionatore e i termosifoni a zero<br>– Chiudi lo scuro della porta finestra",
+                checkout_item_keys_new: "<strong>Restituire le chiavi:</strong> Per favore, riponi le chiavi nella cassetta di sicurezza MasterLock esterna, la stessa usata per il check-in.",
+                checkout_item_tax_new: "<strong>Tassa di soggiorno:</strong> L'importo è di 1,50 € a persona per notte. Si applica agli ospiti di età compresa tra 10 e 75 anni, gli altri sono esenti. Ti preghiamo di lasciare il totale in contanti sul tavolo.",
+                // Come Arrivare
+                directions_title: "Come Arrivare al Vostro Rifugio sul Mare",
+                directions_intro: "Raggiungerci è semplice. L'alloggio si trova nella tranquilla località di Bacucco, facilmente accessibile in auto.",
+                directions_hub_btn_map: "Apri su Google Maps",
+                directions_car_title: "Indicazioni Stradali",
+                directions_car_desc: "Dall'autostrada A4, prendi l'uscita Padova Est e segui le indicazioni per Piove di Sacco e successivamente per Chioggia. Una volta a Chioggia, segui la segnaletica per Sottomarina e poi per Isola Verde / Bacucco. L'appartamento si trova all'interno del <strong>Residence Le Magnolie</strong>.",
+                directions_parking_title: "Parcheggio",
+                directions_parking_desc: "Un parcheggio privato è a vostra completa disposizione gratuitamente. Troverete il vostro posto auto riservato, il <strong>numero 5</strong>, direttamente presso la struttura, per un arrivo comodo e senza pensieri.",
+                // Pagina WiFi
+                wifi_title: "Informazioni Wi-Fi",
+                wifi_ssid_label: "Network (SSID):",
+                wifi_password_label: "Password:",
+                wifi_connect_button: "Connettiti al Wi-Fi",
+                wifi_connect_instruction: "Connessione automatica (solo da mobile)",
+                // Pagina Regole
+                rules_title: "Regole della Casa",
+                rules_intro_final: "Benvenuti! Per rendere il soggiorno piacevole per tutti, vi chiediamo di rispettare alcune semplici regole durante la vostra permanenza.",
+                rules_pets_title_new: "Animali Domestici",
+                rules_pets_desc_new: "Siamo felici di accogliere anche i vostri amici a quattro zampe!<br>L'appartamento è pet-friendly, ma solo per animali di piccola taglia.",
+                rules_parties_title_new: "Feste ed Eventi",
+                rules_parties_desc_new: "Non è consentito organizzare feste o eventi all'interno dell'appartamento, nel rispetto del vicinato e della quiete della zona.",
+                rules_smoking_title_new: "Fumo",
+                rules_smoking_desc_new: "Per mantenere un ambiente salubre per tutti, vi chiediamo di non fumare all'interno dell'appartamento.",
+                rules_kitchen_title_new: "Pulizia della Cucina",
+                rules_kitchen_desc_new: "Al momento del check-out, vi chiediamo gentilmente di lasciare piatti e stoviglie puliti.",
+                rules_sustainability_title_new: "Turismo Sostenibile",
+                rules_sustainability_desc1_new: "Aiutaci a proteggere il pianeta!<br>Risparmia energia, evita sprechi d'acqua, spegni le luci e i dispositivi quando non servono.",
+                rules_sustainability_desc2_new: "'SAVE THE PLANET – Aiutaci a risparmiare energia e non sprecarla.'",
+                rules_quiet_title_new: "Orari del Silenzio",
+                rules_quiet_desc_new: "Ti chiediamo di rispettare la quiete nei seguenti orari:<br>Dalle 22:00 alle 8:00<br>Dalle 13:00 alle 15:00<br>Evita rumori forti e chiudi le porte con delicatezza.",
+                rules_checkout_title_new: "Check-out",
+                rules_checkout_desc_new: "L'appartamento deve essere lasciato entro le ore 10:00.<br>La tassa di soggiorno va lasciata sul tavolo.<br>L'alloggio è riservato esclusivamente agli ospiti registrati.",
+                rules_damage_title_new: "Danni",
+                rules_damage_desc_new: "In caso di piccoli incidenti o danneggiamenti, ti chiediamo di informarci.<br>Siamo sempre disponibili per trovare la soluzione migliore.",
+                // Pagina Market
+                market_title: "Market & Negozi",
+                market_section_supermarkets: "Supermercati Vicini",
+                market_dist_ao: "1 min a piedi",
+                market_dist_moretto: "10 min a piedi / 2 in auto",
+                market_dist_ipercoop: "10 min in auto",
+                market_section_specialty: "Dove Comprare... Carne, Pesce, Gastronomia",
+                market_salumeria_name: "Gastronomia Salumeria 'al Salone'",
+                market_salumeria_loc: "10 min in macchina",
+                market_salumeria_desc: "Ampio assortimento di salumi, formaggi, vini, conserve e dolci artigianali. Luogo ideale per gli appassionati di gastronomia e buon cibo.",
+                market_butcher_name: "Filippo e Tiziana macelleria gastronomica",
+                market_butcher_loc: "Viale Mediterraneo - 13 min in macchina",
+                market_butcher_desc: "Macelleria storica con carni selezionate venete e tagli speciali su richiesta.",
+                market_fish_name: "Pescheria Barbarigo",
+                market_fish_loc: "13 min in macchina",
+                market_fish_desc: "Pesce fresco locale, crostacei e molluschi. Offre anche piatti pronti e cucina sul posto.",
+                // Pagina Convenzioni
+                deals_title: "Convenzioni",
+                deals_albachiara_title: "Albachiara Beach",
+                deals_albachiara_desc: "Vivi un'estate indimenticabile! Grazie alla nostra collaborazione, come nostro ospite hai diritto a offerte esclusive.",
+                deals_albachiara_offer1: "<strong>5% di sconto</strong> con una spesa minima di €50",
+                deals_albachiara_offer2: "<strong>10% di sconto</strong> con una spesa minima di €100",
+                deals_albachiara_offer3: "<strong>10% di sconto</strong> sul noleggio lettini",
+                // Pagina Posti da Visitare
+                places_title: "I Tesori di Chioggia e Dintorni",
+                places_chioggia_title: "Centro Storico di Chioggia",
+                places_chioggia_desc: "Perditi tra le calli e i canali che ricordano Venezia. Passeggia lungo Corso del Popolo, il cuore pulsante della città, e ammira i pescherecci colorati lungo il Canal Vena.",
+                places_sottomarina_title: "Spiaggia di Sottomarina",
+                places_sottomarina_desc: "Goditi una giornata di sole sulla lunga spiaggia di sabbia dorata. Perfetta per famiglie, con stabilimenti balneari attrezzati e aree per sport acquatici.",
+                places_market_title: "Mercato Ittico al Minuto",
+                places_market_desc: "Vivi l'atmosfera autentica del mercato del pesce più grande dell'Adriatico. Un'esplosione di suoni, colori e profumi dove scoprire il pescato locale.",
+                places_isolaverde_title: "Spiaggia di Isola Verde",
+                places_isolaverde_desc: "Un'oasi di tranquillità immersa nel verde, con una spiaggia sabbiosa e fondali bassi, ideale per chi cerca relax e contatto con la natura.",
+                places_clocktower_title: "Torre dell'Orologio di Sant'Andrea",
+                places_clocktower_desc: "Scopri uno degli orologi da torre funzionanti più antichi del mondo. Sali in cima per godere di una vista panoramica mozzafiato sulla città e sulla laguna.",
+                places_bosco_title: "Riserva Naturale Integrale Bosco Nordio",
+                places_bosco_desc: "A pochi minuti di auto, immergiti in un'antica foresta di lecci e pini. Un'oasi di pace perfetta per passeggiate rilassanti e per scoprire la flora e la fauna della duna costiera.",
+                // Pagina Guida alla Casa
+                house_guide_title: "Guida alla Casa",
+                guide_q_coffee: "Macchina del Caffè",
+                guide_a_coffee_desc: "La macchinetta del caffè è facilissima da utilizzare. Per tutte le istruzioni dettagliate su come utilizzarla, guarda il video qui sotto.",
+                guide_a_coffee_button: "Guarda il Video Tutorial",
+                guide_q_ac: "Aria Condizionata",
+                guide_a_ac: `<p>Per una guida visiva, guarda il nostro video tutorial su YouTube. Il telecomando potrebbe essere leggermente diverso, ma le icone e le funzioni principali sono le stesse.</p><a href="https://youtu.be/mumSRUYYG_I" target="_blank" rel="noopener noreferrer" class="btn btn-video btn-sm mt-2 mb-4 inline-flex items-center"><i class="fab fa-youtube"></i><span class="ml-2">Video per l'uso</span></a><ul class="styled-list mt-4 compact-list"><li><i class="fas fa-power-off"></i><div><strong>1. Accensione / Power:</strong> Premere il pulsante ON/OFF per avviare o spegnere l’unità.</div></li><li><i class="fas fa-cogs"></i><div><strong>2. Modalità / Mode selector:</strong><p class="mt-2 mb-0"><strong>Cool (❄):</strong> raffredda l’ambiente.<br><strong>Heat (☀):</strong> riscalda (se disponibile).<br><strong>Dry (💧):</strong> deumidifica, ideale quando l’aria è umida.<br><strong>Fan (🌀):</strong> soffia aria senza cambiare la temperatura.<br><strong>Auto (A):</strong> regola automaticamente modalità, temperatura e ventola.</p></div></li><li><i class="fas fa-thermometer-half"></i><div><strong>3. Temperatura / Temperature:</strong> Usare i pulsanti “+” e “–” per alzare o abbassare la temperatura.</div></li><li><i class="fas fa-fan"></i><div><strong>4. Velocità ventola / Fan speed:</strong> Selezionare tra Bassa, Media, Alta o Auto.</div></li><li><i class="fas fa-wind"></i><div><strong>5. Direzione / Swing:</strong> Attiva/disattiva l’oscillazione delle alette per distribuire meglio l’aria.</div></li><li><i class="fas fa-moon"></i><div><strong>6. Altre modalità:</strong><p class="mt-2 mb-0"><strong>Timer:</strong> programma accensione/spegnimento.<br><strong>Sleep (🌙):</strong> regola la temperatura per un comfort notturno.<br><strong>Eco/Quiet/Turbo:</strong> modalità economica, silenziosa o di massima potenza.</p></div></li></ul>`,
+                guide_q_tv: "Smart TV e Intrattenimento",
+                guide_a_tv: `<p>Potete tranquillamente scaricare e utilizzare qualsiasi servizio o app direttamente nella TV tramite i vostri profili. In alternativa, potete trasmettere contenuti dal vostro telefono alla TV tramite la rete Wi-Fi dell'appartamento.</p><ul class="styled-list mt-4 compact-list"><li><i class="fas fa-power-off"></i><div><strong>1. Accensione / Power:</strong> Premere il tasto Power/ON/OFF sul telecomando.</div></li><li><i class="fas fa-home"></i><div><strong>2. Home / Smart Hub:</strong> Il tasto Home richiama la schermata principale con app, sorgenti e impostazioni.</div></li><li><i class="fas fa-arrows-alt"></i><div><strong>3. Navigazione:</strong> Usate le frecce direzionali e OK/Select per muovervi e confermare.</div></li><li><i class="fas fa-volume-up"></i><div><strong>4. Volume / Canali:</strong> Controllate volume (±) e canali (CH ±).</div></li><li><i class="fas fa-sign-in-alt"></i><div><strong>5. Source / Input:</strong> Permette di passare da Smart TV a HDMI, USB, ecc.</div></li><li><i class="fas fa-undo"></i><div><strong>6. Back / Return:</strong> Torna alla schermata precedente.</div></li></ul>`,
+                guide_q_stove: "Fornelletto Elettrico",
+                guide_a_stove: `<p>Il fornelletto elettrico è pratico e veloce, ideale per cucinare piatti semplici in modo sicuro.</p><h4 class="text-white font-semibold mt-4 mb-2">Istruzioni:</h4><ul class="styled-list compact-list"><li><i class="fas fa-plug"></i><div>Collega il fornelletto alla presa di corrente utilizzando il cavo, che si trova nel fondo del cassetto delle posate.</div></li><li><i class="fas fa-toggle-on"></i><div>Accendilo tramite la manopola di regolazione e attendi qualche minuto che si scaldi.</div></li><li><i class="fas fa-utensils"></i><div>Una volta caldo, puoi cucinare i tuoi piatti in tutta tranquillità.</div></li><li><i class="fas fa-power-off"></i><div>Al termine, spegnilo e scollegalo dalla presa.</div></li></ul><h4 class="text-white font-semibold mt-4 mb-2">⚠️ Attenzione:</h4><p>Utilizzare sempre su una superficie stabile e mai lasciarlo incustodito durante l’uso.</p>`,
+                guide_q_pool: "Piscina",
+                guide_a_pool: `<p>La piscina è a vostra disposizione durante il soggiorno. Vi preghiamo di rispettare gli orari e le semplici regole per garantire a tutti un'esperienza piacevole.</p><h4 class="text-white font-semibold mt-4 mb-2">Orari di Apertura:</h4><ul class="styled-list compact-list"><li><i class="fas fa-clock"></i><div><strong>Mattina:</strong> 10:00 – 12:30</div></li><li><i class="fas fa-clock"></i><div><strong>Pomeriggio:</strong> 15:30 – 19:00</div></li></ul><h4 class="text-white font-semibold mt-4 mb-2">Accesso:</h4><p>Per accedere all'area piscina, è sufficiente mostrare il telecomando del cancello automatico che avete trovato nella cassetta di sicurezza al vostro arrivo.</p><h4 class="text-white font-semibold mt-4 mb-2">Servizi Inclusi:</h4><p>Avete a disposizione ombrelloni e sdrai ad uso gratuito.</p>`,
+                guide_q_contacts: "Contatti Utili",
+                guide_a_contacts: `<h4 class="text-white font-semibold mb-2">Numeri di Emergenza Nazionali</h4><ul class="styled-list compact-list emergency-list mb-4"><li><i class="fas fa-exclamation-triangle"></i><div><strong>Numero Unico Emergenze:</strong> 112</div></li><li><i class="fas fa-ambulance"></i><div><strong>Ambulanza:</strong> 118</div></li><li><i class="fas fa-fire-extinguisher"></i><div><strong>Vigili del Fuoco:</strong> 115</div></li></ul><h4 class="text-white font-semibold mb-2">I Nostri Contatti per Emergenze</h4><div class="border-b border-border-color-light pb-4 mb-4"><p class="font-semibold text-light">Moorent Pm</p><div class="flex gap-2 mt-2"><a href="tel:+393534830386" class="btn btn-secondary btn-sm flex-1 justify-center"><i class="fas fa-phone-alt"></i> Chiama</a><a href="https://wa.me/393534830386?text=Ciao%20sono%20...%20dell'appartamento%20di%20Isola%20Verde!%20Avrei%20bisogno%20della%20vostra%20assistenza" target="_blank" class="btn btn-success btn-sm flex-1 justify-center"><i class="fab fa-whatsapp"></i> WhatsApp</a></div></div><div class="border-b border-border-color-light pb-4 mb-4"><p class="font-semibold text-light">Beatrice</p><div class="flex gap-2 mt-2"><a href="tel:+393408894082" class="btn btn-secondary btn-sm flex-1 justify-center"><i class="fas fa-phone-alt"></i> Chiama</a><a href="https://wa.me/393408894082?text=Ciao%20sono%20...%20dell'appartamento%20di%20Isola%20Verde!%20Avrei%20bisogno%20della%20vostra%20assistenza" target="_blank" class="btn btn-success btn-sm flex-1 justify-center"><i class="fab fa-whatsapp"></i> WhatsApp</a></div></div><h4 class="text-white font-semibold mt-6 mb-2">Taxi</h4><p>Qui puoi inserire i numeri dei taxi locali.</p>`,
+                // Pagina Arrivederci
+                goodbye_title_new: "Arrivederci e Grazie!",
+                goodbye_p1_new: "Speriamo che il tuo soggiorno nel nostro loft sia stato indimenticabile e che Padova ti abbia conquistato.",
+                goodbye_p2_new: "Il tuo feedback è preziosissimo per noi. Ci aiuta a crescere e a offrire un'esperienza sempre migliore. Se ti va, ti saremmo immensamente grati se potessi dedicarci un minuto del tuo tempo per lasciarci una recensione.",
+                goodbye_btn_review: "Lascia una Recensione",
+                goodbye_discount_title: "Un Grazie Speciale per Voi",
+                goodbye_discount_p1: "Per ringraziarti di averci scelto, vogliamo offrirti un codice sconto del <strong>5%</strong> sulla tua prossima prenotazione diretta.",
+                goodbye_discount_p2: "In più, per chi ci aiuta a brillare con un feedback eccezionale, lo sconto fedeltà <strong>aumenta al 15%</strong>! È il nostro modo per dire grazie a chi ci valuta con il punteggio massimo in ogni categoria.",
+                goodbye_btn_book: "Prenota il tuo Prossimo Soggiorno",
+                goodbye_btn_pm: "Contattaci su WhatsApp",
+                goodbye_pm_whatsapp_link: "https://wa.me/393534830386?text=Buongiorno%2C%20sono%20proprietario%2Fa%20di%20un%20immobile%20e%20sarei%20interessato%2Fa%20ai%20vostri%20servizi%20di%20Property%20Management.%20Potreste%20darmi%20qualche%20informazione%20in%20pi%C3%B9%3F%20Grazie!",
+                // Gemini Features
+                gemini_tip_title: "✨ Un Consiglio per Voi",
+                gemini_tip_desc: "Ogni giorno chiediamo a un esperto locale un suggerimento speciale per la tua giornata a Chioggia. Scopri quello di oggi!",
+                gemini_tip_loading: "Sto cercando un consiglio speciale per te...",
+                gemini_itinerary_title: "✨ Crea il Tuo Itinerario Ideale",
+                gemini_itinerary_desc: "Siamo qui per aiutarti a creare un'esperienza unica. Dicci cosa ti appassiona e per quanti giorni ti fermi, ti prepareremo un itinerario su misura per scoprire il meglio di Chioggia.",
+                gemini_itinerary_interests_label: "I tuoi interessi",
+                gemini_itinerary_days_label: "Numero di giorni",
+                gemini_itinerary_btn_generate: "Prepara il mio Itinerario",
+                gemini_itinerary_loading: "Sto creando il tuo itinerario personalizzato...",
+                gemini_itinerary_day_1: "1 Giorno",
+                gemini_itinerary_day_2: "2 Giorni",
+                gemini_itinerary_day_3: "3 Giorni",
+                gemini_itinerary_day_4: "4 Giorni",
+                gemini_itinerary_day_5: "5 Giorni",
+                gemini_api_error: "Oops! Qualcosa è andato storto. Riprova più tardi.",
+
+                // NUOVE CHIAVI PER PROPERTY MANAGEMENT
+                goodbye_pm_title: "Sei un Proprietario di Casa?",
+                goodbye_pm_p1: "Gestire un immobile può essere complesso. Offriamo un servizio di property management completo per massimizzare i tuoi guadagni e liberarti da ogni pensiero.",
+                goodbye_pm_p2: "Dalla gestione delle prenotazioni alla manutenzione, pensiamo a tutto noi."
+            },
+            en: {
+                // General
+                header_title_default: "Welcome Book",
+                btn_previous: "Previous",
+                btn_next: "Next",
+                btn_copy: "Copy",
+                btn_copy_feedback: "Copied",
+                btn_go: "Go",
+                btn_info: "Info",
+                btn_download_coupon: "Download Coupon",
+                btn_back_home: "Back to Home",
+                btn_show_directions: "Find out how to get here",
+                copied_success: "Address copied!",
+                copy_error: "Address copy error",
+                copy_unsupported: "Copy not supported",
+                download_started: "Coupon download started...",
+                download_failed: "Download failed",
+                footer_linktree: "Discover More",
+                 // Page Titles
+                page_title_home: "Welcome Book",
+                page_title_benvenuto: "Welcome",
+                page_title_checkin_hub: "Check-in / Check-out",
+                page_title_checkin: "Check-in Procedure",
+                page_title_checkout: "Check-out Procedure",
+                page_title_directions: "How to Arrive",
+                page_title_wifi: "WiFi Information",
+                page_title_rules: "House Rules",
+                page_title_market: "Market & Shops",
+                page_title_deals: "Partner Deals",
+                page_title_places: "Places to Visit",
+                page_title_guide: "House Guide",
+                page_title_goodbye: "Goodbye and Thank You!",
+                // Home Page
+                home_greeting: "DEAR GUESTS, Welcome!",
+                home_subtitle: "Click the icons to explore",
+                home_btn_welcome: "WELCOME",
+                home_btn_directions: "DIRECTIONS",
+                home_btn_checkin_out: "CHECK-IN / OUT",
+                home_btn_wifi: "WIFI",
+                home_btn_rules: "HOUSE RULES",
+                home_btn_market: "MARKET",
+                home_btn_deals: "DEALS",
+                home_btn_places: "PLACES TO VISIT",
+                home_btn_guide: "HOUSE GUIDE",
+                home_btn_goodbye: "GOODBYE",
+                // Welcome Page
+                welcome_title_new: "Welcome to the Tranquility of Bacucco: Your Seaside Retreat",
+                welcome_greeting_new: "Dear guests,",
+                welcome_intro_new: "We are pleased to welcome you to our cozy accommodation, the ideal place to experience an unforgettable stay between nature and sea in Chioggia.",
+                welcome_subtitle_location: "Strategic Position",
+                welcome_location_desc: "Located in the quiet area of Bacucco, our studio offers a perfect retreat just 30 meters from the beautiful beach of Isola Verde. With private parking included, you can easily reach the historic center of Chioggia by car, ready to discover the wonders of 'Little Venice' and the local maritime traditions.",
+                // Check-in Hub
+                checkin_hub_title: "Check-in & Check-out",
+                checkin_hub_prompt: "Select the information:",
+                checkin_hub_btn_in: "See Check-in Procedure",
+                checkin_hub_btn_out: "See Check-out Procedure",
+                // Check-in Steps
+                checkin_title: "Check-in",
+                checkin_time: "(From 3:00 PM)",
+                checkin_video_title: "Check-in Video Tutorial",
+                checkin_video_desc: "Prefer a video? Watch the full tutorial for a quick and easy check-in.",
+                checkin_video_button: "Watch Now",
+                checkin_step1_title_c: "STEP 1: PEDESTRIAN ACCESS",
+                checkin_step1_desc_c: "Reach Residence Le Magnolie and locate the gray gate to the left of the main gate. The gate is always open - walk through it to enter the property.",
+                checkin_step2_title_c: "STEP 2: REACH THE APARTMENT",
+                checkin_step2_desc_c: "Walk straight along the internal path, then turn left onto the gravel path that runs alongside the apartments. Continue keeping the apartments on your right until you reach Apartment No. 5.",
+                checkin_step3_title_c: "STEP 3: GET THE KEYS",
+                checkin_step3_desc_c: "On the small terrace of Apartment No. 5, open the Master Lock with the code 2-5-0-5. Inside you will find the apartment keys and the remote control for the automatic gate.",
+                checkin_step4_title_c: "STEP 4: VEHICLE ACCESS (if necessary)",
+                checkin_step4_desc_c: "Return to the main gate and hold the remote control near the sensor on the post. Enter with the car and park in space No. 5 (same number as the apartment).",
+                checkin_step5_title_c: "STEP 5: ENTER THE RESIDENCE",
+                checkin_step5_desc_c: "Head to the main entrance of the residence and use the keys to open the building's entrance door.",
+                checkin_step6_title_c: "STEP 6: ACCESS THE APARTMENT",
+                checkin_step6_desc_c: "Go to Apartment No. 5 and open the door with the keys. Welcome!",
+                // Check-out
+                checkout_title_new: "How to Check Out",
+                checkout_time_new: "(By 10:00 AM)",
+                checkout_intro_new: "To help us best prepare the apartment for the next guests, please follow these simple instructions before leaving:",
+                checkout_item_towels_new: "<strong>Gather used towels:</strong> Please leave used towels inside the bathroom sink.",
+                checkout_item_trash_new: "<strong>Dispose of trash:</strong> We kindly ask you to empty the bins and dispose of the trash in the designated public containers outside.",
+                checkout_item_power_new: "<strong>Turn everything off:</strong> Before leaving:<br>– Turn off all lights<br>– Set the air conditioner and radiators to zero<br>– Close the balcony door shutter",
+                checkout_item_keys_new: "<strong>Return the keys:</strong> Please put the keys back in the external MasterLock safety box, the same one used for check-in.",
+                checkout_item_tax_new: "<strong>Tourist tax:</strong> The amount is €1.50 per person per night. It applies to guests aged between 10 and 75; others are exempt. Please leave the total amount in cash on the table.",
+                // Directions
+                directions_title: "How to Get to Your Seaside Retreat",
+                directions_intro: "Reaching us is simple. The accommodation is located in the quiet area of Bacucco, easily accessible by car.",
+                directions_hub_btn_map: "Open on Google Maps",
+                directions_car_title: "Driving Directions",
+                directions_car_desc: "From the A4 motorway, take the Padova Est exit and follow the signs for Piove di Sacco and then for Chioggia. Once in Chioggia, follow the signs for Sottomarina and then for Isola Verde / Bacucco. The apartment is located inside the <strong>Residence Le Magnolie</strong>.",
+                directions_parking_title: "Parking",
+                directions_parking_desc: "A private car park is at your complete disposal free of charge. You will find your reserved parking space, <strong>number 5</strong>, directly at the property, for a comfortable and stress-free arrival.",
+                // WiFi
+                wifi_title: "Wi-Fi Information",
+                wifi_ssid_label: "Network (SSID):",
+                wifi_password_label: "Password:",
+                wifi_connect_button: "Connect to Wi-Fi",
+                wifi_connect_instruction: "Automatic connection (mobile only)",
+                // Rules (Updated)
+                rules_title: "House Rules",
+                rules_intro_final: "Welcome! To make the stay enjoyable for everyone, we ask you to respect a few simple rules during your stay.",
+                rules_pets_title_new: "Pets",
+                rules_pets_desc_new: "We are happy to welcome your four-legged friends too!<br>The apartment is pet-friendly, but only for small pets.",
+                rules_parties_title_new: "Parties and Events",
+                rules_parties_desc_new: "Organizing parties or events inside the apartment is not allowed, out of respect for the neighbors and the quietness of the area.",
+                rules_smoking_title_new: "Smoking",
+                rules_smoking_desc_new: "To maintain a healthy environment for everyone, we ask you not to smoke inside the apartment.",
+                rules_kitchen_title_new: "Kitchen Cleaning",
+                rules_kitchen_desc_new: "At check-out, we kindly ask you to leave dishes and cookware clean.",
+                rules_sustainability_title_new: "Sustainable Tourism",
+                rules_sustainability_desc1_new: "Help us protect the planet!<br>Save energy, avoid wasting water, turn off lights and devices when not needed.",
+                rules_sustainability_desc2_new: "'SAVE THE PLANET – Help us save energy and not waste it.'",
+                rules_quiet_title_new: "Quiet Hours",
+                rules_quiet_desc_new: "We ask you to respect the quiet hours during the following times:<br>From 10:00 PM to 8:00 AM<br>From 1:00 PM to 3:00 PM<br>Avoid loud noises and close doors gently.",
+                rules_checkout_title_new: "Check-out",
+                rules_checkout_desc_new: "The apartment must be vacated by 10:00 AM.<br>The tourist tax should be left on the table.<br>The accommodation is reserved exclusively for registered guests.",
+                rules_damage_title_new: "Damages",
+                rules_damage_desc_new: "In case of minor accidents or damages, please inform us.<br>We are always available to find the best solution.",
+                // Market
+                market_title: "Market & Shops",
+                market_section_supermarkets: "Nearby Supermarkets",
+                market_dist_ao: "1 min walk",
+                market_dist_moretto: "10 min walk / 2 by car",
+                market_dist_ipercoop: "10 min by car",
+                market_section_specialty: "Where to Buy... Meat, Fish, Delicatessen",
+                market_salumeria_name: "Delicatessen 'al Salone'",
+                market_salumeria_loc: "10 min by car",
+                market_salumeria_desc: "Wide assortment of cured meats, cheeses, wines, preserves, and artisanal sweets. Described as an “ideal place for lovers of gastronomy and good food.”",
+                market_butcher_name: "Filippo e Tiziana Butcher Shop",
+                market_butcher_loc: "Viale Mediterraneo - 13 min by car",
+                market_butcher_desc: "Historic butcher shop with selected Venetian meats and special cuts on request.",
+                market_fish_name: "Barbarigo Fish Market",
+                market_fish_loc: "13 min by car",
+                market_fish_desc: "Local fresh fish, crustaceans, and mollusks. Also offers ready-made dishes and on-site cooking.",
+                // Deals
+                deals_title: "Partner Deals",
+                deals_albachiara_title: "Albachiara Beach",
+                deals_albachiara_desc: "Live an unforgettable summer! Thanks to our partnership, as our guest you are entitled to exclusive offers.",
+                deals_albachiara_offer1: "<strong>5% discount</strong> on a minimum spend of €50",
+                deals_albachiara_offer2: "<strong>10% discount</strong> on a minimum spend of €100",
+                deals_albachiara_offer3: "<strong>10% discount</strong> on sunbed rental",
+                // Places
+                places_title: "The Treasures of Chioggia & Surroundings",
+                places_chioggia_title: "Historic Center of Chioggia",
+                places_chioggia_desc: "Get lost in the alleys and canals reminiscent of Venice. Stroll along Corso del Popolo, the heart of the city, and admire the colorful fishing boats along the Canal Vena.",
+                places_sottomarina_title: "Sottomarina Beach",
+                places_sottomarina_desc: "Enjoy a sunny day on the long golden sand beach. Perfect for families, with equipped beach clubs and areas for water sports.",
+                places_market_title: "Fish Market",
+                places_market_desc: "Experience the authentic atmosphere of the largest fish market on the Adriatic. An explosion of sounds, colors, and scents where you can discover the local catch.",
+                places_isolaverde_title: "Isola Verde Beach",
+                places_isolaverde_desc: "An oasis of tranquility surrounded by greenery, with a sandy beach and shallow waters, ideal for those seeking relaxation and contact with nature.",
+                places_clocktower_title: "Sant'Andrea Clock Tower",
+                places_clocktower_desc: "Discover one of the oldest working tower clocks in the world. Climb to the top to enjoy a breathtaking panoramic view of the city and the lagoon.",
+                places_bosco_title: "Bosco Nordio Nature Reserve",
+                places_bosco_desc: "A few minutes by car, immerse yourself in an ancient forest of holm oaks and pines. An oasis of peace perfect for relaxing walks and discovering the flora and fauna of the coastal dune.",
+                 // House Guide
+                house_guide_title: "House Guide",
+                guide_q_coffee: "Coffee Machine",
+                guide_a_coffee_desc: "The coffee machine is very easy to use. For detailed instructions on how to use it, watch the video below.",
+                guide_a_coffee_button: "Watch Video Tutorial",
+                guide_q_ac: "Air Conditioning",
+                guide_a_ac: `<p>For a visual guide, watch our YouTube tutorial. The remote control might look slightly different, but the main icons and functions are the same.</p><a href="https://youtu.be/gR8xmI02Ab4" target="_blank" rel="noopener noreferrer" class="btn btn-video btn-sm mt-2 mb-4 inline-flex items-center"><i class="fab fa-youtube"></i><span class="ml-2">Watch Video Guide</span></a><ul class="styled-list mt-4 compact-list"><li><i class="fas fa-power-off"></i><div><strong>1. Power:</strong> Press the ON/OFF button to start or stop the unit.</div></li><li><i class="fas fa-cogs"></i><div><strong>2. Mode selector:</strong><p class="mt-2 mb-0"><strong>Cool (❄):</strong> cools the room.<br><strong>Heat (☀):</strong> heats the room (if available).<br><strong>Dry (💧):</strong> dehumidifies, ideal for humid weather.<br><strong>Fan (🌀):</strong> blows air without changing temperature.<br><strong>Auto (A):</strong> automatically adjusts mode, temperature, and fan speed.</p></div></li><li><i class="fas fa-thermometer-half"></i><div><strong>3. Temperature:</strong> Use the “+” and “–” buttons to raise or lower the temperature.</div></li><li><i class="fas fa-fan"></i><div><strong>4. Fan speed:</strong> Select between Low, Med, High, or Auto.</div></li><li><i class="fas fa-wind"></i><div><strong>5. Swing control:</strong> Activates/deactivates the louver swing to distribute air better.</div></li><li><i class="fas fa-moon"></i><div><strong>6. Other modes:</strong><p class="mt-2 mb-0"><strong>Timer:</strong> schedule automatic on/off.<br><strong>Sleep (🌙):</strong> adjusts temperature for nighttime comfort.<br><strong>Eco/Quiet/Turbo:</strong> for economy, silent, or max power modes.</p></div></li></ul>`,
+                guide_q_tv: "Smart TV & Entertainment",
+                guide_a_tv: `<p>Feel free to download and use any service or app directly on the TV using your own profiles. Alternatively, you can cast content from your phone to the TV via the apartment's Wi-Fi network.</p><ul class="styled-list mt-4 compact-list"><li><i class="fas fa-power-off"></i><div><strong>1. Power:</strong> Press the Power/ON/OFF button on the remote.</div></li><li><i class="fas fa-home"></i><div><strong>2. Home / Smart Hub:</strong> The Home button brings up the main screen with apps, sources, and settings.</div></li><li><i class="fas fa-arrows-alt"></i><div><strong>3. Navigation:</strong> Use the arrow keys and OK/Select to move and confirm.</div></li><li><i class="fas fa-volume-up"></i><div><strong>4. Volume / Channels:</strong> Control volume (±) and channels (CH ±).</div></li><li><i class="fas fa-sign-in-alt"></i><div><strong>5. Source / Input:</strong> Allows you to switch from Smart TV to HDMI, USB, etc.</div></li><li><i class="fas fa-undo"></i><div><strong>6. Back / Return:</strong> Returns to the previous screen.</div></li></ul>`,
+                guide_q_stove: "Electric Stove",
+                guide_a_stove: `<p>The electric stove is practical and fast, ideal for safely cooking simple dishes.</p><h4 class="text-white font-semibold mt-4 mb-2">Instructions:</h4><ul class="styled-list compact-list"><li><i class="fas fa-plug"></i><div>Connect the stove to the power outlet using the cable, found at the bottom of the cutlery drawer.</div></li><li><i class="fas fa-toggle-on"></i><div>Turn it on using the adjustment knob and wait a few minutes for it to heat up.</div></li><li><i class="fas fa-utensils"></i><div>Once hot, you can cook your dishes with peace of mind.</div></li><li><i class="fas fa-power-off"></i><div>When finished, turn it off and unplug it from the outlet.</div></li></ul><h4 class="text-white font-semibold mt-4 mb-2">⚠️ Warning:</h4><p>Always use on a stable surface and never leave it unattended during use.</p>`,
+                guide_q_pool: "Swimming Pool",
+                guide_a_pool: `<p>The swimming pool is available for you during your stay. Please respect the opening hours and simple rules to ensure a pleasant experience for everyone.</p><h4 class="text-white font-semibold mt-4 mb-2">Opening Hours:</h4><ul class="styled-list compact-list"><li><i class="fas fa-clock"></i><div><strong>Morning:</strong> 10:00 AM – 12:30 PM</div></li><li><i class="fas fa-clock"></i><div><strong>Afternoon:</strong> 3:30 PM – 7:00 PM</div></li></ul><h4 class="text-white font-semibold mt-4 mb-2">Access:</h4><p>To access the pool area, simply show the automatic gate remote control that you found in the lockbox upon arrival.</p><h4 class="text-white font-semibold mt-4 mb-2">Included Amenities:</h4><p>Umbrellas and sunbeds are available for you to use free of charge.</p>`,
+                guide_q_contacts: "Useful Contacts",
+                guide_a_contacts: `<h4 class="text-white font-semibold mb-2">National Emergency Numbers</h4><ul class="styled-list compact-list emergency-list mb-4"><li><i class="fas fa-exclamation-triangle"></i><div><strong>General Emergency:</strong> 112</div></li><li><i class="fas fa-ambulance"></i><div><strong>Ambulance:</strong> 118</div></li><li><i class="fas fa-fire-extinguisher"></i><div><strong>Fire Department:</strong> 115</div></li></ul><h4 class="text-white font-semibold mb-2">Our Emergency Contacts</h4><div class="border-b border-border-color-light pb-4 mb-4"><p class="font-semibold text-light">Moorent Pm</p><div class="flex gap-2 mt-2"><a href="tel:+393534830386" class="btn btn-secondary btn-sm flex-1 justify-center"><i class="fas fa-phone-alt"></i> Call</a><a href="https://wa.me/393534830386?text=Hello,%20I'm...%20from%20the%20Isola%20Verde%20apartment!%20I%20need%20your%20assistance" target="_blank" class="btn btn-success btn-sm flex-1 justify-center"><i class="fab fa-whatsapp"></i> WhatsApp</a></div></div><div class="border-b border-border-color-light pb-4 mb-4"><p class="font-semibold text-light">Beatrice</p><div class="flex gap-2 mt-2"><a href="tel:+393408894082" class="btn btn-secondary btn-sm flex-1 justify-center"><i class="fas fa-phone-alt"></i> Call</a><a href="https://wa.me/393408894082?text=Hello,%20I'm...%20from%20the%20Isola%20Verde%20apartment!%20I%20need%20your%20assistance" target="_blank" class="btn btn-success btn-sm flex-1 justify-center"><i class="fab fa-whatsapp"></i> WhatsApp</a></div></div><h4 class="text-white font-semibold mt-6 mb-2">Taxi</h4><p>Here you can insert local taxi numbers.</p>`,
+                // Goodbye Page
+                goodbye_title_new: "Goodbye and Thank You!",
+                goodbye_p1_new: "We hope your stay in our loft was unforgettable and that you fell in love with Padua.",
+                goodbye_p2_new: "Your feedback is invaluable to us. It helps us grow and offer an even better experience. If you have a moment, we would be immensely grateful if you could leave us a review.",
+                goodbye_btn_review: "Leave a Review",
+                goodbye_discount_title: "A Special Thanks for You",
+                goodbye_discount_p1: "To thank you for choosing us, we want to offer you a <strong>5%</strong> discount code for your next direct booking.",
+                goodbye_discount_p2: "Furthermore, for those who help us shine with exceptional feedback, the loyalty discount <strong>increases to 15%</strong>! It's our way of saying thank you to those who rate us with the highest score in every category.",
+                goodbye_btn_book: "Book Your Next Stay",
+                goodbye_btn_pm: "Contact us on WhatsApp",
+                goodbye_pm_whatsapp_link: "https://wa.me/393534830386?text=Hello,%20I%20am%20a%20property%20owner%20and%20I%20would%20be%20interested%20in%20your%20Property%20Management%20services.%20Could%20you%20give%20me%20some%20more%20information%3F%20Thank%20you!",
+                 // Gemini Features
+                gemini_tip_title: "✨ A Tip For You",
+                gemini_tip_desc: "Every day we ask a local expert for a special tip for your day in Chioggia. Discover today's!",
+                gemini_tip_loading: "Searching for a special tip for you...",
+                gemini_itinerary_title: "✨ Create Your Ideal Itinerary",
+                gemini_itinerary_desc: "We are here to help you create a unique experience. Tell us what you're passionate about and for how many days you're staying, and we'll prepare a custom itinerary for you to discover the best of Chioggia.",
+                gemini_itinerary_interests_label: "Your interests",
+                gemini_itinerary_days_label: "Number of days",
+                gemini_itinerary_btn_generate: "Prepare my Itinerary",
+                gemini_itinerary_loading: "Creating your personalized itinerary...",
+                gemini_itinerary_day_1: "1 Day",
+                gemini_itinerary_day_2: "2 Days",
+                gemini_itinerary_day_3: "3 Days",
+                gemini_itinerary_day_4: "4 Days",
+                gemini_itinerary_day_5: "5 Days",
+                gemini_api_error: "Oops! Something went wrong. Please try again later.",
+                
+                // NUOVE CHIAVI PER PROPERTY MANAGEMENT
+                goodbye_pm_title: "Are You a Homeowner?",
+                goodbye_pm_p1: "Managing a property can be complex. We offer a complete property management service to maximize your earnings and free you from all worries.",
+                goodbye_pm_p2: "From booking management to maintenance, we take care of everything."
+            }
+        };
+
+        // --- Variabili Globali e Setup ---
+        const markdownConverter = new showdown.Converter(); // Istanza per convertire Markdown in HTML
+
+        // --- Funzioni per chiamate API Gemini ---
+        const API_KEY = "AIzaSyAJfqNwBiGQTE3XAej1sAvd_hgambfIxE0"; // La chiave API viene fornita automaticamente dall'ambiente Canvas
+
+        /**
+         * Funzione generica per chiamare l'API Gemini.
+         * @param {string} prompt - Il prompt da inviare al modello.
+         * @returns {Promise<string|null>} Il testo generato o null in caso di errore.
+         */
+        async function callGemini(prompt) {
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+            const payload = {
+                contents: [{
+                    role: "user",
+                    parts: [{ text: prompt }]
+                }]
+            };
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    console.error("API Error Response:", errorData);
+                    const lang = currentLanguage || 'it';
+                    return translations[lang].gemini_api_error;
+                }
+
+                const result = await response.json();
+                if (result.candidates && result.candidates.length > 0 &&
+                    result.candidates[0].content && result.candidates[0].content.parts &&
+                    result.candidates[0].content.parts.length > 0) {
+                    return result.candidates[0].content.parts[0].text;
+                } else {
+                    console.error("Invalid API response structure:", result);
+                    const lang = currentLanguage || 'it';
+                    return translations[lang].gemini_api_error;
+                }
+            } catch (error) {
+                console.error("Fetch Error:", error);
+                const lang = currentLanguage || 'it';
+                return translations[lang].gemini_api_error;
+            }
+        }
+
+        /**
+         * Genera e visualizza l'itinerario personalizzato.
+         */
+        async function generateItinerary() {
+            const interests = document.getElementById('itinerary-interests').value.trim();
+            const days = document.getElementById('itinerary-days').value;
+            const resultContainer = document.getElementById('itinerary-result');
+            const loader = document.getElementById('itinerary-loader');
+            const generateBtn = document.getElementById('generate-itinerary-btn');
+
+            if (!interests) {
+                showMessage(translations[currentLanguage].gemini_itinerary_interests_label + " " + (translations[currentLanguage].is_required || "is required"), 'warning');
+                return;
+            }
+
+            loader.classList.remove('hidden');
+            resultContainer.classList.add('hidden');
+            generateBtn.disabled = true;
+
+            const promptLang = currentLanguage === 'en' ? 'English' : 'Italian';
+            const prompt = `Sei una guida turistica esperta di Chioggia e dei suoi dintorni (inclusi Isola Verde e Bacucco). Crea un itinerario dettagliato e personalizzato per un turista.
+- Durata: ${days} giorni
+- Interessi: ${interests}
+- La risposta DEVE essere in ${promptLang}.
+- La risposta DEVE essere formattata in Markdown, con titoli per ogni giorno e liste puntate per le attività.
+- Includi suggerimenti per colazione, pranzo e cena con una breve descrizione del locale.
+- Sii creativo e suggerisci almeno una "gemma nascosta" o un'esperienza locale meno conosciuta.
+- Inizia con un titolo accattivante per l'itinerario.`;
+
+            const itineraryText = await callGemini(prompt);
+
+            loader.classList.add('hidden');
+            generateBtn.disabled = false;
+
+            if (itineraryText) {
+                const htmlContent = markdownConverter.makeHtml(itineraryText);
+                resultContainer.innerHTML = htmlContent;
+                resultContainer.classList.remove('hidden');
+            } else {
+                resultContainer.innerHTML = `<p class="text-red-500">${translations[currentLanguage].gemini_api_error || "Oops! Qualcosa è andato storto. Riprova più tardi."}</p>`;
+                resultContainer.classList.remove('hidden');
+            }
+        }
+        
+        /**
+         * Genera e visualizza il consiglio del giorno.
+         */
+        async function getDailyTip() {
+            const tipContainer = document.getElementById('daily-tip-container');
+            const loader = document.getElementById('daily-tip-loader');
+            
+            loader.classList.remove('hidden');
+            tipContainer.classList.add('hidden');
+            
+            const promptLang = currentLanguage === 'en' ? 'English' : 'Italian';
+            const prompt = `Sei un amichevole esperto locale di Chioggia. Dammi un consiglio del giorno unico, interessante e pratico per un turista che visita Chioggia oggi. Il consiglio deve essere conciso (2-3 frasi) e può riguardare Chioggia, Isola Verde o Bacucco. Potrebbe riguardare un evento speciale, un cibo da provare (come il pesce fresco locale), un bel posto per le foto o una curiosità sulla vita dei pescatori. La risposta DEVE essere in ${promptLang}. Non usare formattazione Markdown, solo testo semplice.`;
+            
+            const tipText = await callGemini(prompt);
+            
+            loader.classList.add('hidden');
+            
+            if(tipText) {
+                tipContainer.innerHTML = `<p class="text-light italic">"${tipText}"</p>`;
+                tipContainer.classList.remove('hidden');
+            } else {
+                console.error("Impossibile caricare il consiglio del giorno.");
+                tipContainer.innerHTML = `<p class="text-red-500">${translations[currentLanguage].gemini_api_error || "Oops! Qualcosa è andato storto. Riprova più tardi."}</p>`;
+                tipContainer.classList.remove('hidden');
+            }
+        }
+
+        // --- Logica Navigazione Pagine & Lingua con History API ---
+        const pages = document.querySelectorAll('.page');
+        const backButton = document.getElementById('backButton');
+        const homePageId = 'home';
+        let currentLanguage = 'it';
+
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        };
+
+        function applyTranslations(lang) {
+            const elements = document.querySelectorAll('[data-translate-key]');
+            elements.forEach(el => {
+                const key = el.dataset.translateKey;
+                const translation = translations[lang]?.[key];
+                if (translation !== undefined) {
+                    const containsHtmlTags = /<strong>|<\/strong>|<br>|<p>|<\/p>|<ul>|<\/ul>|<li>|<\/li>|<a\s.*?>|<\/a>/.test(translation);
+                    if (containsHtmlTags) {
+                        el.innerHTML = translation;
+                    } else {
+                        el.textContent = translation;
+                    }
+                }
+            });
+             const activePage = document.querySelector('.page.active');
+             if (activePage) {
+                let pageKey = activePage.id;
+                // Gestisce casi speciali per chiavi di traduzione del titolo
+                if(pageKey === "come_arrivare") pageKey = "directions";
+                if(pageKey === "benvenuto") pageKey = "welcome";
+                if(pageKey === "arrivederci") pageKey = "goodbye";
+                if(pageKey === "guida_casa") pageKey = "guide";
+                if(pageKey === "regole") pageKey = "rules";
+                if(pageKey === "posti") pageKey = "places";
+                if(pageKey === "convenzioni") pageKey = "deals";
+
+                const titleKey = `page_title_${pageKey.replace(/_hub|_new/g, '')}`;
+                document.title = "Welcome Book - " + (translations[lang]?.[titleKey] || 'Welcome');
+             } else {
+                 document.title = 'Welcome Book';
+             }
+             document.querySelectorAll('.lang-btn').forEach(btn => {
+                 btn.classList.toggle('active', btn.id === `lang-${lang}`);
+             });
+             document.documentElement.lang = lang;
+             
+             const pmWhatsappLink = document.getElementById('pm-whatsapp-link');
+            if (pmWhatsappLink) {
+                pmWhatsappLink.href = translations[lang]?.goodbye_pm_whatsapp_link || '#';
+            }
+        }
+
+        function setLanguage(lang) {
+            if (translations[lang]) {
+                currentLanguage = lang;
+                localStorage.setItem('selectedLanguage', lang);
+                applyTranslations(lang);
+                 if (document.getElementById('checkin')?.classList.contains('active')) {
+                     initializeCheckinSteps();
+                 }
+            }
+        }
+
+        function showPage(pageId, fromHistory = false) {
+            const targetPage = document.getElementById(pageId);
+
+            if (!targetPage) {
+                console.error(`Page with ID "${pageId}" not found. Showing home.`);
+                showPage(homePageId, fromHistory);
+                return;
+            }
+
+            pages.forEach(p => p.classList.remove('active'));
+            targetPage.classList.add('active');
+
+            const isHome = (pageId === homePageId);
+            backButton.style.display = isHome ? 'none' : 'inline-block';
+            
+            if (!fromHistory) {
+                const newUrl = '#' + pageId;
+                if (window.location.hash !== newUrl) {
+                    history.pushState({ pageId: pageId }, '', newUrl);
+                }
+            }
+
+            applyTranslations(currentLanguage);
+            
+            if (pageId === 'benvenuto') getDailyTip();
+            if (pageId === 'checkin') initializeCheckinSteps();
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        window.addEventListener('popstate', (event) => {
+            if (event.state && event.state.pageId) {
+                showPage(event.state.pageId, true);
+            } else {
+                const pageIdFromHash = window.location.hash.substring(1);
+                showPage(pageIdFromHash || homePageId, true);
+            }
+        });
+
+        backButton.addEventListener('click', () => {
+            history.back();
+        });
+
+        // --- Logica Step Check-in ---
+        let currentCheckinStep = 1;
+        let totalCheckinSteps = 0;
+        const checkinStepsContainer = document.getElementById('checkin-steps-container');
+        const checkinStepIndicator = document.getElementById('checkin-step-indicator');
+        const checkinPrevButton = document.getElementById('checkin-prev');
+        const checkinNextButton = document.getElementById('checkin-next');
+        let checkinStepElements = [];
+
+        function initializeCheckinSteps() {
+            if (!checkinStepsContainer || !checkinStepIndicator) return;
+            checkinStepElements = Array.from(checkinStepsContainer.querySelectorAll('.step-content'));
+            totalCheckinSteps = checkinStepElements.length;
+            checkinStepIndicator.innerHTML = '';
+
+            if(totalCheckinSteps > 0) {
+                for (let i = 1; i <= totalCheckinSteps; i++) {
+                    const dot = document.createElement('div');
+                    dot.classList.add('step-dot');
+                    checkinStepIndicator.appendChild(dot);
+                }
+                currentCheckinStep = 1;
+                updateCheckinStepView();
+            }
+        }
+        function updateCheckinStepView() {
+             if (!checkinStepElements || checkinStepElements.length === 0) return;
+             checkinStepElements.forEach((step, index) => {
+                 step.classList.toggle('active', (index + 1) === currentCheckinStep);
+             });
+             const dots = checkinStepIndicator.querySelectorAll('.step-dot');
+             dots.forEach((dot, index) => {
+                 dot.classList.toggle('active', (index + 1) === currentCheckinStep);
+             });
+            updateCheckinStepButtons();
+        }
+         function updateCheckinStepButtons() {
+             if(checkinPrevButton && checkinNextButton) {
+                 checkinPrevButton.disabled = currentCheckinStep === 1;
+                 checkinNextButton.disabled = currentCheckinStep === totalCheckinSteps;
+             }
+         }
+        function navigateCheckinSteps(direction) {
+            const newStep = currentCheckinStep + direction;
+            if (newStep >= 1 && newStep <= totalCheckinSteps) {
+                currentCheckinStep = newStep;
+                updateCheckinStepView();
+            }
+        }
+
+        // --- Funzioni Utilità ---
+        const messageBox = document.getElementById('messageBox');
+        let messageTimeout;
+
+        function showMessage(textKey, type = 'info', duration = 2500) {
+             if (!messageBox) return;
+             clearTimeout(messageTimeout);
+             messageBox.textContent = translations[currentLanguage]?.[textKey] || textKey;
+             messageBox.className = 'show';
+             if (type === 'success') { messageBox.classList.add('success'); }
+             messageTimeout = setTimeout(() => {
+                 messageBox.classList.remove('show', 'success');
+             }, duration);
+        }
+
+        function copyToClipboard(text, buttonElement) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            
+            // Make the textarea invisible
+            textArea.style.position = 'fixed';
+            textArea.style.top = 0;
+            textArea.style.left = 0;
+            textArea.style.width = '2em';
+            textArea.style.height = '2em';
+            textArea.style.padding = 0;
+            textArea.style.border = 'none';
+            textArea.style.outline = 'none';
+            textArea.style.boxShadow = 'none';
+            textArea.style.background = 'transparent';
+
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if (successful) {
+                    showMessage('copied_success', 'success');
+                    const originalContent = buttonElement.innerHTML;
+                    buttonElement.innerHTML = `<i class="fas fa-check"></i>`;
+                    buttonElement.classList.add('btn-success');
+                    buttonElement.classList.remove('btn-secondary');
+                     setTimeout(() => {
+                         buttonElement.innerHTML = originalContent;
+                         buttonElement.className = buttonElement.className.replace('btn-success', 'btn-secondary');
+                     }, 2000);
+                } else {
+                    console.error('Fallback: Copying text command was unsuccessful');
+                    showMessage('copy_error', 'error');
+                }
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+                showMessage('copy_error', 'error');
+            }
+
+            document.body.removeChild(textArea);
+        }
+
+        async function downloadCoupon() {
+            showMessage('download_started', 'info');
+
+            // URL dei coupon per ogni lingua
+            const couponUrls = {
+                it: 'https://i.imgur.com/cxZpVcW.png', // Coupon in Italiano
+                en: 'https://i.imgur.com/htFrn8h.png'   // Coupon in Inglese
+            };
+
+            const url = couponUrls[currentLanguage];
+            
+            if (!url) {
+                console.error("URL del coupon non trovato per la lingua corrente.");
+                showMessage('download_failed', 'error');
+                return;
+            }
+
+            try {
+                // Scarica l'immagine come dati
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Network response was not ok.');
+                const blob = await response.blob();
+
+                // Crea un URL temporaneo per i dati scaricati
+                const objectUrl = window.URL.createObjectURL(blob);
+
+                // Crea un link invisibile per avviare il download
+                const link = document.createElement('a');
+                link.href = objectUrl;
+                link.setAttribute('download', 'coupon.png'); // Nome del file
+                document.body.appendChild(link);
+                link.click();
+                
+                // Pulisce dopo il download
+                link.remove();
+                window.URL.revokeObjectURL(objectUrl);
+
+            } catch (error) {
+                console.error('Download fallito:', error);
+                showMessage('download_failed', 'error');
+                // Se il download automatico fallisce, apre l'immagine in una nuova scheda
+                window.open(url, '_blank');
+            }
+        }
+
+        // --- Inizializzazione al Caricamento della Pagina ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Inizializzazione App Principale ---
+            try {
+                // Calcola altezza header
+                const header = document.querySelector('.fixed-header');
+                if (header) {
+                    const headerHeight = header.offsetHeight;
+                    document.documentElement.style.setProperty('--nav-height-actual', `${headerHeight}px`);
+                }
+
+                // Imposta lingua
+                const savedLang = localStorage.getItem('selectedLanguage');
+                const initialLang = translations[savedLang] ? savedLang : 'it';
+                setLanguage(initialLang);
+
+                // Logica di caricamento pagina iniziale basata sull'URL hash
+                const initialPageId = window.location.hash.substring(1);
+                const pageExists = document.getElementById(initialPageId);
+                
+                if (initialPageId && pageExists) {
+                    showPage(initialPageId, true);
+                } else {
+                    showPage(homePageId, true);
+                    history.replaceState({ pageId: homePageId }, '', '#'+homePageId);
+                }
+
+                // Collega event listener per generazione itinerario
+                document.getElementById('generate-itinerary-btn')?.addEventListener('click', generateItinerary);
+
+                // Aggiunge rel="noopener noreferrer" ai link esterni
+                document.querySelectorAll('a[target="_blank"]').forEach(link => {
+                     link.rel = 'noopener noreferrer';
+                });
+
+                console.log("App Initialized Successfully.");
+            } catch (error) {
+                console.error("Error during app initialization:", error);
+            }
+
+            // --- Script per lo sfondo animato ---
+            try {
+                const storyCanvas = document.getElementById('storyWavesBg');
+                if (storyCanvas) {
+                    const storyCtx = storyCanvas.getContext('2d');
+
+                    function resizeStoryCanvas() {
+                        storyCanvas.width = window.innerWidth;
+                        storyCanvas.height = window.innerHeight;
+                        createStoryWaves();
+                    }
+
+                    const lineColor = '#d6c4bf';
+
+                    class StoryWaveLine {
+                        constructor(options) {
+                            this.x = 0;
+                            this.y = options.y || Math.random() * storyCanvas.height;
+                            this.amplitude = options.amplitude || (30 + Math.random() * 80);
+                            this.wavelength = options.wavelength || (100 + Math.random() * 300);
+                            this.frequency = Math.PI * 2 / this.wavelength;
+                            this.phase = options.phase || Math.random() * Math.PI * 2;
+                            this.lineWidth = options.lineWidth || (0.2 + Math.random() * 0.6);
+                            this.speed = options.speed || (0.002 + Math.random() * 0.008);
+                            this.opacity = options.opacity || (0.1 + Math.random() * 0.3);
+                            this.segments = [];
+                            this.segmentLength = 2;
+
+                            for (let x = 0; x < window.innerWidth + this.segmentLength; x += this.segmentLength) {
+                                this.segments.push({
+                                    x: x,
+                                    y: this.y + Math.sin(this.frequency * x + this.phase) * this.amplitude
+                                });
+                            }
+                        }
+
+                        update() {
+                            this.phase += this.speed;
+                            for (let i = 0; i < this.segments.length; i++) {
+                                this.segments[i].y = this.y + Math.sin(this.frequency * this.segments[i].x + this.phase) * this.amplitude;
+                            }
+                        }
+
+                        draw() {
+                            storyCtx.beginPath();
+                            storyCtx.strokeStyle = lineColor;
+                            storyCtx.lineWidth = this.lineWidth;
+                            storyCtx.globalAlpha = this.opacity;
+
+                            storyCtx.moveTo(this.segments[0].x, this.segments[0].y);
+
+                            for (let i = 1; i < this.segments.length; i++) {
+                                storyCtx.lineTo(this.segments[i].x, this.segments[i].y);
+                            }
+
+                            storyCtx.stroke();
+                            storyCtx.globalAlpha = 1;
+                        }
+                    }
+
+                    let storyWaveGroups = [];
+
+                    function createStoryWaves() {
+                        storyWaveGroups = [];
+                        // Primo gruppo - parte alta del canvas
+                        for (let i = 0; i < 10; i++) {
+                            storyWaveGroups.push(new StoryWaveLine({
+                                y: storyCanvas.height * 0.2 + i * 15,
+                                amplitude: 20 + i * 1.5,
+                                wavelength: 1200 + i * 10,
+                                phase: i * 0.2,
+                                lineWidth: 0.4,
+                                speed: 0.002,
+                                opacity: 0.15
+                            }));
+                        }
+                        // Secondo gruppo - parte centrale del canvas
+                        for (let i = 0; i < 15; i++) {
+                            storyWaveGroups.push(new StoryWaveLine({
+                                y: storyCanvas.height * 0.5 + i * 12,
+                                amplitude: 25 - i * 0.5,
+                                wavelength: 800 + i * 50,
+                                phase: i * 0.1 + Math.PI,
+                                lineWidth: 0.5,
+                                speed: 0.003,
+                                opacity: 0.25
+                            }));
+                        }
+                        // Terzo gruppo - parte bassa del canvas
+                        for (let i = 0; i < 10; i++) {
+                            storyWaveGroups.push(new StoryWaveLine({
+                                y: storyCanvas.height * 0.8 + i * 15,
+                                amplitude: 20 + i * 1,
+                                wavelength: 1000 - i * 20,
+                                phase: i * 0.15 + Math.PI / 2,
+                                lineWidth: 0.4,
+                                speed: 0.0015,
+                                opacity: 0.2
+                            }));
+                        }
+                    }
+
+                    resizeStoryCanvas();
+                    window.addEventListener('resize', debounce(resizeStoryCanvas, 250));
+
+                    function animateStoryWaves() {
+                        storyCtx.clearRect(0, 0, storyCanvas.width, storyCanvas.height);
+                        storyWaveGroups.forEach(wave => {
+                            wave.update();
+                            wave.draw();
+                        });
+                        requestAnimationFrame(animateStoryWaves);
+                    }
+
+                    animateStoryWaves();
+                }
+            } catch (error) {
+                console.error("Error during animation setup:", error);
+            }
+            
+            // ======================================================
+            // SPAZIO RISERVATO PER LA LOGICA JAVASCRIPT DEL CHATBOT
+            // Qui potrai incollare la logica per:
+            // - Gestione della finestra di chat (toggleChatWindow, sendMessage, etc.)
+            // - Funzioni di chiamata API (getBotResponse, etc.)
+            // ======================================================
+        });
+    </script>
+</body>
+</html>
